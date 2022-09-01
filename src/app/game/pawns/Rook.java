@@ -1,6 +1,6 @@
 package app.game.pawns;
 
-import app.game.weapons.Weapon;
+import app.game.weapons.BaseWeapon;
 
 public class Rook extends BasePawn {
 
@@ -11,7 +11,7 @@ public class Rook extends BasePawn {
 	 * @param weapon
 	 * @param model
 	 */
-	public Rook(int health, int armor, Weapon weapon, String model) {
+	public Rook(int health, int armor, BaseWeapon weapon, String model) {
 		super(125, 75, weapon, "♖");
 	}
 

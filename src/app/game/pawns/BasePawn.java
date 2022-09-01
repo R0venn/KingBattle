@@ -1,6 +1,6 @@
 package app.game.pawns;
 
-import app.game.weapons.Weapon;
+import app.game.weapons.BaseWeapon;
 
 public abstract class BasePawn {
 	/**
@@ -9,12 +9,12 @@ public abstract class BasePawn {
 	// class attributes
 	private int health;
 	private int armor;
-	private Weapon weapon;
+	private BaseWeapon weapon;
 	private String model;
 	
 	
 	// constrcutor(s)
-	public BasePawn (int health, int armor, Weapon weapon, String model) {
+	public BasePawn (int health, int armor, BaseWeapon weapon, String model) {
 		this.health = health;
 		this.armor = armor;
 		this.weapon = weapon;
@@ -59,7 +59,7 @@ public abstract class BasePawn {
 	 * 
 	 * @return
 	 */
-	public Weapon getWeapon() {
+	public BaseWeapon getWeapon() {
 		return weapon;
 	}
 	
@@ -67,7 +67,7 @@ public abstract class BasePawn {
 	 * 
 	 * @return
 	 */
-	public void setWeapon(Weapon weapon) {
+	public void setWeapon(BaseWeapon weapon) {
 		this.weapon = weapon;
 	}
 	
