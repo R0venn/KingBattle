@@ -11,8 +11,8 @@ public class King extends BasePawn{
 	 * @param weapon
 	 * @param model
 	 */
-	public King(int health, int armor, Weapon weapon, char model) {
-		super(200, 50, weapon, '♔');
+	public King(int health, int armor, Weapon weapon, String model) {
+		super(200, 50, weapon, "♔");
 	}
 
 }

@@ -1,13 +1,14 @@
 package app.game.graphics;
 
+import app.game.pawns.BasePawn;
 import core.ConsoleColors;
 import core.Utils;
 
 public class Board {
-	public String[][] board;
+	public BasePawn[][] board;
 	
 	public Board() {
-		this.board = new String[8][8];
+		this.board = new BasePawn[8][8];
 	}
 	
 	public void displayBoard() {
@@ -16,7 +17,7 @@ public class Board {
 		for(int x = 0; x < this.board.length; x++) {
 			System.out.print("("+(x+1)+")");
 			for(int y = 0; y < this.board[0].length; y++) {
-				currentCase = this.board[x][y] != null ? this.board[x][y] : "♜";
+				currentCase = this.board[x][y] != null ? this.board[x][y].toString() : " ";
 				System.out.print(ConsoleColors.CYAN_BACKGROUND + " " + currentCase + " " + ConsoleColors.RESET);
 			}
 			System.out.println();

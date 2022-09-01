@@ -10,11 +10,11 @@ public abstract class BasePawn {
 	private int health;
 	private int armor;
 	private Weapon weapon;
-	private char model;
+	private String model;
 	
 	
 	// constrcutor(s)
-	public BasePawn (int health, int armor, Weapon weapon, char model) {
+	public BasePawn (int health, int armor, Weapon weapon, String model) {
 		this.health = health;
 		this.armor = armor;
 		this.weapon = weapon;
@@ -75,7 +75,7 @@ public abstract class BasePawn {
 	 * 
 	 * @return
 	 */
-	public char getModel() {
+	public String getModel() {
 		return model;
 	}
 	
@@ -83,9 +83,11 @@ public abstract class BasePawn {
 	 * 
 	 * @return
 	 */
-	public void setModel(char model) {
+	public void setModel(String model) {
 		this.model = model;
 	}
 	
-	
+	public String toString() {
+		return this.model;
+	}
 }
