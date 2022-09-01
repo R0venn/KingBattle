@@ -1,4 +1,4 @@
-import app.game.Board;
+import app.game.graphics.Board;
 
 public class Main {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package app.game;
+package app.game.graphics;
 
 import core.ConsoleColors;
 import core.Utils;

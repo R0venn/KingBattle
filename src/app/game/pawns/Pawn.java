@@ -1,6 +1,6 @@
-package app.pawns;
+package app.game.pawns;
 
-import app.weapons.Weapon;
+import app.game.weapons.Weapon;
 
 public class Pawn extends BasePawn{
 
