@@ -1,6 +1,6 @@
-package pawns;
+package app.pawns;
 
-import weapons.Weapon;
+import app.weapons.Weapon;
 
 public class Rook extends BasePawn {
 

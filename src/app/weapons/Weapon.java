@@ -1,4 +1,4 @@
-package weapons;
+package app.weapons;
 
 public abstract class Weapon {
 
