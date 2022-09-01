@@ -7,18 +7,20 @@ public abstract class BasePawn {
 	 * 
 	 */
 	// class attributes
-	private int health;
-	private int armor;
-	private BaseWeapon weapon;
-	private String model;
+	private int m_health;
+	private int m_armor;
+	private BaseWeapon m_weapon;
+	private String m_model;
+	private int m_x;
+	private int m_y;
 	
 	
 	// constrcutor(s)
 	public BasePawn (int health, int armor, BaseWeapon weapon, String model) {
-		this.health = health;
-		this.armor = armor;
-		this.weapon = weapon;
-		this.model = model;
+		this.m_health = health;
+		this.m_armor = armor;
+		this.m_weapon = weapon;
+		this.m_model = model;
 	}
 	
 	// methods 
@@ -28,7 +30,7 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public int getHealth() {
-		return health;
+		return m_health;
 	}
 	
 	/**
@@ -36,7 +38,7 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public void setHealth(int health) {
-		this.health = health;
+		this.m_health = health;
 	}
 	
 	/**
@@ -44,7 +46,7 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public int getArmor() {
-		return armor;
+		return m_armor;
 	}
 	
 	/**
@@ -52,7 +54,7 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public void setArmor(int armor) {
-		this.armor = armor;
+		this.m_armor = armor;
 	}
 	
 	/**
@@ -60,7 +62,7 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public BaseWeapon getWeapon() {
-		return weapon;
+		return m_weapon;
 	}
 	
 	/**
@@ -68,7 +70,7 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public void setWeapon(BaseWeapon weapon) {
-		this.weapon = weapon;
+		this.m_weapon = weapon;
 	}
 	
 	/**
@@ -76,7 +78,7 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public String getModel() {
-		return model;
+		return m_model;
 	}
 	
 	/**
@@ -84,10 +86,10 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public void setModel(String model) {
-		this.model = model;
+		this.m_model = model;
 	}
 	
 	public String toString() {
-		return this.model;
+		return this.m_model;
 	}
 }
