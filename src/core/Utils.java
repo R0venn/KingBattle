@@ -1,5 +1,15 @@
 package core;
 
-public abstract class Utils {
+import java.util.Random;
 
+public abstract class Utils {
+	public static void clearScreen() {
+		System.out.print("\033[H\033[2J");  
+		System.out.flush();
+	}
+	
+	public static int randInt(int min, int max) {
+		Random random = new Random();
+		return random.nextInt(max + min) + min;
+	}
 }

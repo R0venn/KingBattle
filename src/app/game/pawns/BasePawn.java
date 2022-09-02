@@ -39,7 +39,15 @@ public abstract class BasePawn {
 	
 	public int getX() { return this.m_x; }
 	public int getY() { return this.m_y; }
+	
+	public void setX(int newX) { this.m_x = newX; }
+	public void setY(int newY) { this.m_y = newY; }
+	
 	public String getColor() { return this.m_color.getColor(); }
+	
+	public boolean isDead() {
+		return this.getHealth() <= 0;
+	}
 	
 	/**
 	 * 

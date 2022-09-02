@@ -14,6 +14,7 @@ public class Game {
 	private Board board;
 	private Player[] players;
 	public static final BasePawn[] PAWNS_AVAILABLES = new BasePawn[] {new Bishop(0,0), new Knight(0,0), new Pawn(0,0), new Queen(0,0), new Rook(0,0)};
+	private int gameRound;
 	
 	public Game() {
 		this.board = new Board();
