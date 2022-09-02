@@ -35,4 +35,39 @@ public class Player {
 	public void winGameRound() {
 		this.m_score++;
 	}
+
+	
+	public BasePawn getKing() {
+		boolean found = false;
+		BasePawn toCheck = null;
+		BasePawn res = null;
+		int pawnsSize = this.getPawns().size();
+		int i = 0;
+		while(!found && i < pawnsSize) {
+			toCheck = this.getPawns().get(i);
+			if(toCheck.getModel().equals("♔")) {
+				res = toCheck;
+				found = true;
+			}
+			i++;
+		}
+		return res;
+	}
+	
+	public BasePawn getPawnFromPos(int x, int y) {
+		boolean found = false;
+		BasePawn toCheck = null;
+		BasePawn res = null;
+		int pawnsSize = this.getPawns().size();
+		int i = 0;
+		while(!found && i < pawnsSize) {
+			toCheck = this.getPawns().get(i);
+			if(toCheck.getX() == x && toCheck.getY() == y) {
+				res = toCheck;
+				found = true;
+			}
+			i++;
+		}
+		return res;
+	}
 }

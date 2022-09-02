@@ -17,6 +17,7 @@ public class Board {
 	}
 	
 	public void displayBoard() {
+		Utils.clearScreen();
 		String currentCase;
 		String currentColor;
 		System.out.println("   (a  b  c  d  e  f  g  h)");
@@ -38,5 +39,19 @@ public class Board {
 			this.pawns[pawnToAdd.getY()][pawnToAdd.getX()] = pawnToAdd;
 		}
 		return res;
+	}
+	
+	public BasePawn getPawn(int x, int y) {
+		return this.pawns[y][x];
+	}
+	
+	public boolean isPawn(int x, int y) {
+		return this.getPawn(x, y) != null;
+	}
+	
+	public void movePawn(int oldX, int oldY, int newX, int newY) {
+		this.pawns[newY][newX] = this.pawns[oldY][oldX];
+		this.pawns[oldY][oldX] = null;
+		this.displayBoard();
 	}
 }
