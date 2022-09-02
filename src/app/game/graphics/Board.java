@@ -17,14 +17,15 @@ public class Board {
 	}
 	
 	public void displayBoard() {
+		Utils.clearScreen();
 		String currentCase;
 		String currentColor;
 		System.out.println("   (a  b  c  d  e  f  g  h)");
-		for(int x = 0; x < this.pawns.length; x++) {
-			System.out.print("("+(x+1)+")");
-			for(int y = 0; y < this.pawns[0].length; y++) {
-				currentCase = this.pawns[x][y] != null ? this.pawns[x][y].toString() : " ";
-				currentColor = this.pawns[x][y] != null ? this.pawns[x][y].getColor() : ConsoleColors.CYAN_BACKGROUND;
+		for(int y = 0; y < this.pawns.length; y++) {
+			System.out.print("("+(y+1)+")");
+			for(int x = 0; x < this.pawns[0].length; x++) {
+				currentCase = this.pawns[y][x] != null ? this.pawns[y][x].toString() : " ";
+				currentColor = this.pawns[y][x] != null ? this.pawns[y][x].getColor() : ConsoleColors.CYAN_BACKGROUND;
 				System.out.print(currentColor + " " + currentCase + " " + ConsoleColors.RESET);
 			}
 			System.out.println();
@@ -38,5 +39,19 @@ public class Board {
 			this.pawns[pawnToAdd.getY()][pawnToAdd.getX()] = pawnToAdd;
 		}
 		return res;
+	}
+	
+	public BasePawn getPawn(int x, int y) {
+		return this.pawns[y][x];
+	}
+	
+	public boolean isPawn(int x, int y) {
+		return this.getPawn(x, y) != null;
+	}
+	
+	public void movePawn(int oldX, int oldY, int newX, int newY) {
+		this.pawns[newY][newX] = this.pawns[oldY][oldX];
+		this.pawns[oldY][oldX] = null;
+		this.displayBoard();
 	}
 }

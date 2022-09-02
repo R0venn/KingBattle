@@ -9,6 +9,7 @@ import app.game.pawns.King;
 import app.game.pawns.Knight;
 import app.game.pawns.PawnColors;
 import app.game.players.Player;
+import core.Utils;
 
 public class GameManager {
 	private Game game;
@@ -21,17 +22,32 @@ public class GameManager {
 		Player playerOne = this.game.getFirstPlayer();
 		Player playerTwo = this.game.getSecondPlayer();
 		playerOne.addPawn(new King(3,0));
-		playerOne.addPawn(new Bishop(4,0));
+		// playerOne.addPawn(new Bishop(4,0));
 		playerTwo.addPawn(new King(3,7));
 		this.currentPlayer = playerOne;
 	}
 	
 	public void startGame() {
 		this.popPawns();
+		while(!this.isMatchEnd()) {
+			int newX = Utils.randInt(0, 8);
+			int newY = Utils.randInt(0, 8);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			BasePawn toMove = this.currentPlayer.getKing();
+			this.movePawn(toMove, newX, newY);
+		}
+	}
+	
+	public void nextMatch() {
+		
 	}
 	
 	public void nextRound() {
-		
+		this.currentPlayer = this.currentPlayer == game.getFirstPlayer() ? game.getSecondPlayer() : game.getFirstPlayer();
 	}
 	
 	public void popPawns() {
@@ -45,5 +61,20 @@ public class GameManager {
 			board.addPawn(_pawns);
 		}
 		this.game.getBoard().displayBoard();
+	}
+	
+	public boolean movePawn(BasePawn pawn, int newX, int newY) {
+		boolean res = false;
+		if(this.game.getBoard().getPawn(newX, newY) == null) {
+			this.game.getBoard().movePawn(pawn.getX(), pawn.getY(), newX, newY);
+			pawn.setX(newX);
+			pawn.setY(newY);
+			res = true;
+		}
+		return res;
+	}
+	
+	public boolean isMatchEnd() {
+		return this.game.getFirstPlayer().getKing().isDead() || this.game.getSecondPlayer().getKing().isDead();
 	}
 }
