@@ -5,19 +5,23 @@ import core.ConsoleColors;
 import core.Utils;
 
 public class Board {
-	public BasePawn[][] board;
+	public BasePawn[][] pawns;
 	
 	public Board() {
-		this.board = new BasePawn[8][8];
+		this.pawns = new BasePawn[8][8];
+	}
+	
+	public BasePawn[][] getPawns() {
+		return this.pawns;
 	}
 	
 	public void displayBoard() {
 		String currentCase;
 		System.out.println("   (a  b  c  d  e  f  g  h)");
-		for(int x = 0; x < this.board.length; x++) {
+		for(int x = 0; x < this.pawns.length; x++) {
 			System.out.print("("+(x+1)+")");
-			for(int y = 0; y < this.board[0].length; y++) {
-				currentCase = this.board[x][y] != null ? this.board[x][y].toString() : " ";
+			for(int y = 0; y < this.pawns[0].length; y++) {
+				currentCase = this.pawns[x][y] != null ? this.pawns[x][y].toString() : " ";
 				System.out.print(ConsoleColors.CYAN_BACKGROUND + " " + currentCase + " " + ConsoleColors.RESET);
 			}
 			System.out.println();
