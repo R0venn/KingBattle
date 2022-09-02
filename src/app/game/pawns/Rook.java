@@ -11,8 +11,8 @@ public class Rook extends BasePawn {
 	 * @param weapon
 	 * @param model
 	 */
-	public Rook(int health, int armor, BaseWeapon weapon, String model) {
-		super(125, 75, weapon, "♖");
+	public Rook(int x, int y) {
+		super(125, 75, new BaseWeapon(){}, "♖", x, y);
 	}
 
 }

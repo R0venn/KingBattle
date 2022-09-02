@@ -11,8 +11,8 @@ public class Pawn extends BasePawn{
 	 * @param weapon
 	 * @param model
 	 */
-	public Pawn(int health, int armor, BaseWeapon weapon, String model) {
-		super(50, 0, weapon, "♗");
+	public Pawn(int x, int y) {
+		super(50, 0, new BaseWeapon(){}, "♗", x, y);
 	}
 
 }
