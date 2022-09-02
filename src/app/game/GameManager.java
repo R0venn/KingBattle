@@ -13,35 +13,35 @@ import core.Utils;
 
 public class GameManager {
 	private Game game;
-	private Player currentPlayer;
 	
-	public GameManager() {
+	public GameManager(String namePlayerOne, String namePlayerTwo) {
 		this.game = new Game();
-		this.game.getPlayers()[0] = new Player("John", PawnColors.WHITE);
-		this.game.getPlayers()[1] = new Player("Doe", PawnColors.BLACK);
+		this.game.getPlayers()[0] = new Player(namePlayerOne, PawnColors.WHITE);
+		this.game.getPlayers()[1] = new Player(namePlayerTwo, PawnColors.BLACK);
 		Player playerOne = this.game.getFirstPlayer();
 		Player playerTwo = this.game.getSecondPlayer();
 		playerOne.addPawn(new King(3,0));
 		playerTwo.addPawn(new King(3,7));
-		this.currentPlayer = playerOne;
+		this.game.setCurrentPlayer(playerOne);
 	}
 	
 	public void startGame() {
 		this.popPawns();
 		while(!this.onePlayerWon()) {
 			while(!this.isMatchEnd()) {
+				Player currentPlayer = this.game.getCurrentPlayer();
 				int choice;
 				int[] coordinates;
 				int posX;
 				int posY;
-				this.game.getBoard().displayBoard();
+				this.game.getBoard().displayBoard(this.game);
 				System.out.println(currentPlayer.getNickname() + " que voulez vous faire ?\n1. Attaquer une cible\n2. Bouger mon KING");
 				do {				
 					choice = currentPlayer.askDigit();
 				} while(choice < 1 || choice > 2);
 				switch(choice) {
 				case 1:
-					coordinates = this.currentPlayer.askCoordinates();
+					coordinates = currentPlayer.askCoordinates();
 					posX = coordinates[0];
 					posY = coordinates[1];
 					BasePawn target = this.game.getBoard().getPawn(posX, posY);
@@ -56,10 +56,10 @@ public class GameManager {
 					}
 					break;
 				case 2:
-					coordinates = this.currentPlayer.askCoordinates();
+					coordinates = currentPlayer.askCoordinates();
 					posX = coordinates[0];
 					posY = coordinates[1];
-					BasePawn toMove = this.currentPlayer.getKing();
+					BasePawn toMove = currentPlayer.getKing();
 					this.movePawn(toMove, posX, posY);
 					break;
 				}
@@ -75,7 +75,8 @@ public class GameManager {
 	}
 	
 	public void nextRound() {
-		this.currentPlayer = this.currentPlayer == game.getFirstPlayer() ? game.getSecondPlayer() : game.getFirstPlayer();
+		Player nextPlayer = this.game.getCurrentPlayer() == game.getFirstPlayer() ? game.getSecondPlayer() : game.getFirstPlayer();
+		this.game.setCurrentPlayer(nextPlayer);
 	}
 	
 	public void popPawns() {
@@ -88,7 +89,7 @@ public class GameManager {
 		for(BasePawn _pawns : playerTwoPawns) {
 			board.addPawn(_pawns);
 		}
-		this.game.getBoard().displayBoard();
+		this.game.getBoard().displayBoard(this.game);
 	}
 	
 	public boolean movePawn(BasePawn pawn, int newX, int newY) {

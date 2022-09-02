@@ -4,22 +4,25 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
+import app.game.GameManager;
 import app.game.graphics.Board;
 import app.game.pawns.PawnColors;
 import app.game.players.Player;
+import core.Utils;
 
 public class Menu {
 
 	
-	static String AfficherMenu(){
+	public static String AfficherMenu(){
+		Utils.clearScreen();
 		try
 	    {
 			
-	      // Le fichier d'entrée pour afficher le menu du jeu
-	      FileInputStream file = new FileInputStream("res/menu.txt");   
+	      // Le fichier d'entrï¿½e pour afficher le menu du jeu
+	      FileInputStream file = new FileInputStream("/home/infoetu/cedric.larsonnier.etu/eclipse-workspace/groupe-16/res/menu.txt");   
 	      Scanner scanner = new Scanner(file);  
 	      
-	      //renvoie true s'il y a une autre ligne à lire
+	      //renvoie true s'il y a une autre ligne ï¿½ lire
 	      while(scanner.hasNextLine())
 	      {
 	        System.out.println(scanner.nextLine());
@@ -41,7 +44,7 @@ public class Menu {
 	}
 
 	
-    // Renvoie l'entier associé au choix de l'utilisateur, s'il est valide
+    // Renvoie l'entier associï¿½ au choix de l'utilisateur, s'il est valide
     public static int readIntMenu(){
         boolean demande = true;
         int entree = 0;
@@ -60,12 +63,14 @@ public class Menu {
                     Player Player1 = new Player(m_nickname1,PawnColors.WHITE);
                     System.out.println(Player1.getNickname()+" "+ "a les pions blanc.");
                     
-                    System.out.println("Quel est le nom du deuxième joueur ?");
+                    System.out.println("Quel est le nom du deuxiï¿½me joueur ?");
                     Scanner p2 = new Scanner(System.in);
                     String m_nickname2 = p2.nextLine();
                     Player Player2 = new Player(m_nickname2,PawnColors.BLACK);
                     System.out.println(Player2.getNickname()+" "+ "a les pions noir.");
                     System.out.println("La partie commence !");
+                    GameManager game = new GameManager(m_nickname1,m_nickname2);
+                    game.startGame();
                     demande = false;
    
                 }else if(entree == 2) {
@@ -88,11 +93,11 @@ public class Menu {
 		try
 	    {
 			
-	      // Le fichier d'entrée pour afficher le menu du jeu
+	      // Le fichier d'entrï¿½e pour afficher le menu du jeu
 	      FileInputStream file = new FileInputStream("res/regles.txt");   
 	      Scanner scanner = new Scanner(file);  
 	      
-	      //renvoie true s'il y a une autre ligne à lire
+	      //renvoie true s'il y a une autre ligne ï¿½ lire
 	      while(scanner.hasNextLine())
 	      {
 	        System.out.println(scanner.nextLine());
@@ -108,7 +113,7 @@ public class Menu {
 			System.out.println();
 			int choixRegles = readIntRegles();
 			if(choixRegles == 1) {
-				System.out.println("Support en cours de rédaction.");
+				System.out.println("Support en cours de rï¿½daction.");
 				AfficherPions();
 			}
 		} catch (Exception e) {
@@ -120,7 +125,7 @@ public class Menu {
 	}
     
     
-    // Renvoie l'entier associé au choix de l'utilisateur, s'il est valide
+    // Renvoie l'entier associï¿½ au choix de l'utilisateur, s'il est valide
     public static int readIntRegles(){
         boolean demande = true;
         int entree = 0;
@@ -148,7 +153,7 @@ public class Menu {
     }
     
     
-    // Renvoie l'entier associé au choix de l'utilisateur, s'il est valide
+    // Renvoie l'entier associï¿½ au choix de l'utilisateur, s'il est valide
     public static int readIntPions(){
         boolean demande = true;
         int entree = 0;
@@ -180,11 +185,11 @@ public class Menu {
 		try
 	    {
 			
-	      // Le fichier d'entrée pour afficher le menu du jeu
+	      // Le fichier d'entrï¿½e pour afficher le menu du jeu
 	      FileInputStream file = new FileInputStream("res/pions.txt");   
 	      Scanner scanner = new Scanner(file);  
 	      
-	      //renvoie true s'il y a une autre ligne à lire
+	      //renvoie true s'il y a une autre ligne ï¿½ lire
 	      while(scanner.hasNextLine())
 	      {
 	        System.out.println(scanner.nextLine());

@@ -1,5 +1,6 @@
 package app.game.graphics;
 
+import app.game.Game;
 import app.game.pawns.BasePawn;
 import app.game.pawns.PawnColors;
 import core.ConsoleColors;
@@ -16,7 +17,7 @@ public class Board {
 		return this.pawns;
 	}
 	
-	public void displayBoard() {
+	public void displayBoard(Game game) {
 		Utils.clearScreen();
 		String currentCase;
 		String currentColor;
@@ -27,6 +28,15 @@ public class Board {
 				currentCase = this.pawns[y][x] != null ? this.pawns[y][x].toString() : " ";
 				currentColor = this.pawns[y][x] != null ? this.pawns[y][x].getColor() : ConsoleColors.CYAN_BACKGROUND;
 				System.out.print(currentColor + " " + currentCase + " " + ConsoleColors.RESET);
+			}
+			if(game != null) {
+				if(y == 2) {
+					System.out.print(" Roi blanc : " + game.getFirstPlayer().getKing().getHealth() + " pv");
+				} else if(y == 3) {
+					System.out.print(" Roi noir  : " + game.getSecondPlayer().getKing().getHealth() + " pv");
+				} else if(y == 4) {
+					System.out.print(" C'est aux : " + game.getCurrentPlayer().getColor() + " de jouer.");
+				}
 			}
 			System.out.println();
 		}
@@ -60,6 +70,6 @@ public class Board {
 	public void movePawn(int oldX, int oldY, int newX, int newY) {
 		this.pawns[newY][newX] = this.pawns[oldY][oldX];
 		this.pawns[oldY][oldX] = null;
-		this.displayBoard();
+		this.displayBoard(null);
 	}
 }
