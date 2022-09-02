@@ -4,8 +4,12 @@ import app.game.weapons.BaseWeapon;
 
 public class Bishop extends BasePawn{
 
+	public Bishop(int x, int y, PawnColors color) {
+		super(75, 15, new BaseWeapon(){} , "♗", x, y, color);
+	}
+	
 	public Bishop(int x, int y) {
-		super(75, 15, new BaseWeapon(){} , "♗", x, y);
+		this(x,y, PawnColors.BLACK);
 	}
 
 }

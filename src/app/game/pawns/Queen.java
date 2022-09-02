@@ -11,8 +11,12 @@ public class Queen extends BasePawn{
 	 * @param weapon
 	 * @param model
 	 */
-	public Queen(int x, int y) {
+	public Queen(int x, int y, PawnColors color) {
 		super(175, 25, new BaseWeapon(){}, "♕", x, y);
+	}
+	
+	public Queen(int x, int y) {
+		this(x,y,PawnColors.BLACK);
 	}
 
 }

@@ -23,6 +23,7 @@ public class Player {
 	public ArrayList<BasePawn> getPawns() { return this.m_pawns; }
 	
 	public boolean addPawn(BasePawn pawnToAdd) {
+		pawnToAdd.setColor(this.getColor());
 		return this.getPawns().add(pawnToAdd);
 	}
 	

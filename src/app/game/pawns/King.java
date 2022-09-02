@@ -11,8 +11,12 @@ public class King extends BasePawn{
 	 * @param weapon
 	 * @param model
 	 */
-	public King(int x, int y) {
+	public King(int x, int y, PawnColors color) {
 		super(200, 50, new BaseWeapon(){} , "♔", x, y);
+	}
+	
+	public King(int x, int y) {
+		this(x,y,PawnColors.BLACK);
 	}
 
 }

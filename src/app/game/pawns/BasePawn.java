@@ -13,19 +13,33 @@ public abstract class BasePawn {
 	private String m_model;
 	private int m_x;
 	private int m_y;
+	private PawnColors m_color;
 	
 	
 	// constrcutor(s)
-	public BasePawn (int health, int armor, BaseWeapon weapon, String model, int x, int y) {
+	public BasePawn (int health, int armor, BaseWeapon weapon, String model, int x, int y, PawnColors color) {
 		this.m_health = health;
 		this.m_armor = armor;
 		this.m_weapon = weapon;
 		this.m_model = model;
 		this.m_x = x;
 		this.m_y = y;
+		this.m_color = color;
+	}
+	
+	public BasePawn (int health, int armor, BaseWeapon weapon, String model, int x, int y) {
+		this(health, armor, weapon, model, x, y, PawnColors.BLACK);
 	}
 	
 	// methods 
+	
+	public void setColor(PawnColors color) {
+		this.m_color = color;
+	}
+	
+	public int getX() { return this.m_x; }
+	public int getY() { return this.m_y; }
+	public String getColor() { return this.m_color.getColor(); }
 	
 	/**
 	 * 
