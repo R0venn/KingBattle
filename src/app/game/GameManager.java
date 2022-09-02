@@ -21,7 +21,7 @@ public class GameManager {
 		Player playerOne = this.game.getFirstPlayer();
 		Player playerTwo = this.game.getSecondPlayer();
 		playerOne.addPawn(new King(3,0));
-		playerOne.addPawn(new Bishop(4,0));
+		// playerOne.addPawn(new Bishop(4,0));
 		playerTwo.addPawn(new King(3,7));
 		this.currentPlayer = playerOne;
 	}

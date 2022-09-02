@@ -23,8 +23,8 @@ public class Board {
 		for(int y = 0; y < this.pawns.length; y++) {
 			System.out.print("("+(y+1)+")");
 			for(int x = 0; x < this.pawns[0].length; x++) {
-				currentCase = this.pawns[x][y] != null ? this.pawns[x][y].toString() : " ";
-				currentColor = this.pawns[x][y] != null ? this.pawns[x][y].getColor() : ConsoleColors.CYAN_BACKGROUND;
+				currentCase = this.pawns[y][x] != null ? this.pawns[y][x].toString() : " ";
+				currentColor = this.pawns[y][x] != null ? this.pawns[y][x].getColor() : ConsoleColors.CYAN_BACKGROUND;
 				System.out.print(currentColor + " " + currentCase + " " + ConsoleColors.RESET);
 			}
 			System.out.println();

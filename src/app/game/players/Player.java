@@ -10,6 +10,7 @@ public class Player {
 	private PawnColors m_color;
 	private int m_score;
 	private ArrayList<BasePawn> m_pawns;
+	private BasePawn currentPawn;
 	
 	public Player(String nickname, PawnColors color) {
 		this.m_nickname = nickname;
