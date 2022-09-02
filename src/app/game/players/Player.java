@@ -21,6 +21,7 @@ public class Player {
 		this.m_pawns = new ArrayList<>();
 	}
 	
+	public int getScore() { return this.m_score; }
 	public String getNickname() { return this.m_nickname; }
 	public PawnColors getColor() { return this.m_color; }
 	public ArrayList<BasePawn> getPawns() { return this.m_pawns; }
@@ -34,8 +35,10 @@ public class Player {
 		return this.getPawns().remove(pawnToRemove);
 	}
 	
-	public void winGameRound() {
+	public void winGameMatch() {
 		this.m_score++;
+		System.out.println("Congratulation " + this.getNickname() + " you won the match and got 1 point!");
+		System.out.println("You have now " + this.getScore() + " points out of 3 :)");
 	}
 
 	
@@ -76,11 +79,21 @@ public class Player {
 	public int[] askCoordinates() {
 		int[] res = new int[2];
 		Scanner scanner = new Scanner(System.in);
-		String userInput = "";
+		String userInput;
 		do {
-			System.out.println(this.getNickname() + " entrez des coordonées (ex : b7)");
+			System.out.println("Entrez des coordonées (ex : b7)");
 			userInput = scanner.nextLine();
 		} while(!Utils.areValidsCoordinates(userInput));
 		return Utils.computeCoordinates(userInput);
+	}
+	
+	public int askDigit() {
+		String userInput;
+		Scanner scanner = new Scanner(System.in);
+		do {
+			System.out.println("Entrez votre choix :");
+			userInput = scanner.nextLine();
+		} while(!Utils.isValidDigit(userInput));
+		return Integer.parseInt(userInput);
 	}
 }

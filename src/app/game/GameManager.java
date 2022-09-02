@@ -28,13 +28,45 @@ public class GameManager {
 	
 	public void startGame() {
 		this.popPawns();
-		while(!this.isMatchEnd()) {
-			int[] coordinates = this.currentPlayer.askCoordinates();
-			int newX = coordinates[0];
-			int newY = coordinates[1];
-			BasePawn toMove = this.currentPlayer.getKing();
-			this.movePawn(toMove, newX, newY);
-			this.nextRound();
+		while(!this.onePlayerWon()) {
+			while(!this.isMatchEnd()) {
+				int choice;
+				int[] coordinates;
+				int posX;
+				int posY;
+				this.game.getBoard().displayBoard();
+				System.out.println(currentPlayer.getNickname() + " que voulez vous faire ?\n1. Attaquer une cible\n2. Bouger mon KING");
+				do {				
+					choice = currentPlayer.askDigit();
+				} while(choice < 1 || choice > 2);
+				switch(choice) {
+				case 1:
+					coordinates = this.currentPlayer.askCoordinates();
+					posX = coordinates[0];
+					posY = coordinates[1];
+					BasePawn target = this.game.getBoard().getPawn(posX, posY);
+					int baseHealth = target.getHealth();
+					if(currentPlayer.getKing().attack(posX, posY, this.game.getBoard())){
+						System.out.println("WOOOO tu lui a mis " + (baseHealth - target.getHealth()) + " dégats il lui reste " + target.getHealth() + " point de vie.");
+					}
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					break;
+				case 2:
+					coordinates = this.currentPlayer.askCoordinates();
+					posX = coordinates[0];
+					posY = coordinates[1];
+					BasePawn toMove = this.currentPlayer.getKing();
+					this.movePawn(toMove, posX, posY);
+					break;
+				}
+				this.nextRound();
+			}
+			this.congratRoundWinner();
+			this.resetBoard();
 		}
 	}
 	
@@ -70,7 +102,25 @@ public class GameManager {
 		return res;
 	}
 	
+	public void congratRoundWinner() {
+		Player winner = this.game.getFirstPlayer().getKing().isDead() ? this.game.getSecondPlayer() : this.game.getFirstPlayer();
+		winner.winGameMatch();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void resetBoard() {
+		
+	}
+	
 	public boolean isMatchEnd() {
 		return this.game.getFirstPlayer().getKing().isDead() || this.game.getSecondPlayer().getKing().isDead();
+	}
+	
+	public boolean onePlayerWon() {
+		return this.game.getFirstPlayer().getScore() == 3 || this.game.getSecondPlayer().getScore() == 3;		
 	}
 }
