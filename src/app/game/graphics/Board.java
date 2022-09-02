@@ -42,11 +42,19 @@ public class Board {
 	}
 	
 	public BasePawn getPawn(int x, int y) {
-		return this.pawns[y][x];
+		BasePawn res = null;
+		if(this.posInBound(x, y)) {
+			res = this.pawns[y][x];
+		}
+		return res;
 	}
 	
 	public boolean isPawn(int x, int y) {
 		return this.getPawn(x, y) != null;
+	}	
+	
+	public boolean posInBound(int x, int y) {
+		return (x >= 0 && x < this.getPawns().length) && (y >= 0 && y < this.getPawns()[0].length);
 	}
 	
 	public void movePawn(int oldX, int oldY, int newX, int newY) {

@@ -17,12 +17,11 @@ public class GameManager {
 	
 	public GameManager() {
 		this.game = new Game();
-		this.game.getPlayers()[0] = new Player("John", PawnColors.BLACK);
-		this.game.getPlayers()[1] = new Player("Doe", PawnColors.WHITE);
+		this.game.getPlayers()[0] = new Player("John", PawnColors.WHITE);
+		this.game.getPlayers()[1] = new Player("Doe", PawnColors.BLACK);
 		Player playerOne = this.game.getFirstPlayer();
 		Player playerTwo = this.game.getSecondPlayer();
 		playerOne.addPawn(new King(3,0));
-		// playerOne.addPawn(new Bishop(4,0));
 		playerTwo.addPawn(new King(3,7));
 		this.currentPlayer = playerOne;
 	}
@@ -30,15 +29,12 @@ public class GameManager {
 	public void startGame() {
 		this.popPawns();
 		while(!this.isMatchEnd()) {
-			int newX = Utils.randInt(0, 8);
-			int newY = Utils.randInt(0, 8);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			int[] coordinates = this.currentPlayer.askCoordinates();
+			int newX = coordinates[0];
+			int newY = coordinates[1];
 			BasePawn toMove = this.currentPlayer.getKing();
 			this.movePawn(toMove, newX, newY);
+			this.nextRound();
 		}
 	}
 	
@@ -65,7 +61,7 @@ public class GameManager {
 	
 	public boolean movePawn(BasePawn pawn, int newX, int newY) {
 		boolean res = false;
-		if(this.game.getBoard().getPawn(newX, newY) == null) {
+		if(!this.game.getBoard().isPawn(newX, newY)) {
 			this.game.getBoard().movePawn(pawn.getX(), pawn.getY(), newX, newY);
 			pawn.setX(newX);
 			pawn.setY(newY);

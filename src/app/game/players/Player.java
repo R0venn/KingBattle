@@ -1,7 +1,9 @@
 package app.game.players;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import app.Utils;
 import app.game.pawns.BasePawn;
 import app.game.pawns.PawnColors;
 
@@ -69,5 +71,16 @@ public class Player {
 			i++;
 		}
 		return res;
+	}
+	
+	public int[] askCoordinates() {
+		int[] res = new int[2];
+		Scanner scanner = new Scanner(System.in);
+		String userInput = "";
+		do {
+			System.out.println(this.getNickname() + " entrez des coordonées (ex : b7)");
+			userInput = scanner.nextLine();
+		} while(!Utils.areValidsCoordinates(userInput));
+		return Utils.computeCoordinates(userInput);
 	}
 }
