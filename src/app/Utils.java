@@ -20,7 +20,7 @@ abstract public class Utils {
 	
 	public static boolean isValidDigit(String input) {
 		if(input.length() != 1) return false;
-		if(Character.isDigit(input.charAt(0))) return false;
+		if(!Character.isDigit(input.charAt(0))) return false;
 		return true;
 	}
 }
