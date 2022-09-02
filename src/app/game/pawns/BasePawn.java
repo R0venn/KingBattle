@@ -1,5 +1,6 @@
 package app.game.pawns;
 
+import app.game.graphics.Board;
 import app.game.weapons.BaseWeapon;
 
 public abstract class BasePawn {
@@ -116,4 +117,21 @@ public abstract class BasePawn {
 	public String toString() {
 		return this.m_model;
 	}
+	
+	public boolean attack(int x, int y, Board board) {
+		boolean res = false;
+		BasePawn pawnToAttack =  board.getPawn(x, y);
+		// s'il y a un piont aux coordonnées prises en paramètres, il est possible de l'attaquer.
+		if (pawnToAttack != null) {
+			// on affecte la différence entre les pvs du pion ciblé et des dégâts de l'arme du pion courant à la vie du pion ciblé.
+			pawnToAttack.setHealth(Math.abs(pawnToAttack.getHealth() - this.getWeapon().getDamage()));
+			// si un piont tombe à 0 pv, il meurt et supprimé du plateau de jeu.
+			if (pawnToAttack.isDead()) {
+				pawnToAttack = null;
+			}
+			res = true;
+		}
+		return res;
+	}
+	
 }
