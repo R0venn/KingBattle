@@ -11,8 +11,8 @@ public class Knight extends BasePawn{
 	 * @param weapon
 	 * @param model
 	 */
-	public Knight(int health, int armor, BaseWeapon weapon, String model) {
-		super(150, 25, weapon, "♘");
+	public Knight(int x, int y) {
+		super(150, 25, new BaseWeapon(){}, "♘", x, y);
 	}
 
 }

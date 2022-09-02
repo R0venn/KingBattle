@@ -11,8 +11,8 @@ public class Queen extends BasePawn{
 	 * @param weapon
 	 * @param model
 	 */
-	public Queen(int health, int armor, BaseWeapon weapon, String model) {
-		super(175, 25, weapon, "♕");
+	public Queen(int x, int y) {
+		super(175, 25, new BaseWeapon(){}, "♕", x, y);
 	}
 
 }
