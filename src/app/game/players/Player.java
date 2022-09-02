@@ -76,11 +76,22 @@ public class Player {
 	public int[] askCoordinates() {
 		int[] res = new int[2];
 		Scanner scanner = new Scanner(System.in);
-		String userInput = "";
+		String userInput;
 		do {
 			System.out.println(this.getNickname() + " entrez des coordonées (ex : b7)");
 			userInput = scanner.nextLine();
 		} while(!Utils.areValidsCoordinates(userInput));
+		scanner.close();
 		return Utils.computeCoordinates(userInput);
+	}
+	
+	public int askDigit() {
+		String userInput;
+		Scanner scanner = new Scanner(System.in);
+		do {
+			userInput = scanner.nextLine();
+		} while(!Utils.isValidDigit(userInput));
+		scanner.close();
+		return Integer.parseInt(userInput);
 	}
 }
