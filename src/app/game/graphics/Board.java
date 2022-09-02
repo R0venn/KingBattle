@@ -20,9 +20,9 @@ public class Board {
 		String currentCase;
 		String currentColor;
 		System.out.println("   (a  b  c  d  e  f  g  h)");
-		for(int x = 0; x < this.pawns.length; x++) {
-			System.out.print("("+(x+1)+")");
-			for(int y = 0; y < this.pawns[0].length; y++) {
+		for(int y = 0; y < this.pawns.length; y++) {
+			System.out.print("("+(y+1)+")");
+			for(int x = 0; x < this.pawns[0].length; x++) {
 				currentCase = this.pawns[x][y] != null ? this.pawns[x][y].toString() : " ";
 				currentColor = this.pawns[x][y] != null ? this.pawns[x][y].getColor() : ConsoleColors.CYAN_BACKGROUND;
 				System.out.print(currentColor + " " + currentCase + " " + ConsoleColors.RESET);
