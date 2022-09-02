@@ -38,8 +38,6 @@ public class Menu {
 			int choixMenu = readIntMenu();
 		}
 		return null;   
-		
-
 	}
 
 	
@@ -108,10 +106,10 @@ public class Menu {
 	  
 		try {
 			System.out.println();
-			int choixRegles = readIntMenu();
+			int choixRegles = readIntRegles();
 			if(choixRegles == 1) {
 				System.out.println("Support en cours de rédaction.");
-				AfficherRegles();
+				AfficherPions();
 			}
 		} catch (Exception e) {
 			System.out.println("Nous n'avons pas compris votre choix.");
@@ -133,9 +131,8 @@ public class Menu {
         	Scanner reponse = new Scanner(System.in);
         	entree = reponse.nextInt();
             if(entree == 1){
-                System.out.println("Document en cours de redaction.");
                     demande = false;
-                    readIntRegles();
+                    AfficherPions();
    
                 }else if(entree == 2) {
                 	AfficherMenu();
@@ -149,6 +146,65 @@ public class Menu {
         }
 		return entree;
     }
+    
+    
+    // Renvoie l'entier associé au choix de l'utilisateur, s'il est valide
+    public static int readIntPions(){
+        boolean demande = true;
+        int entree = 0;
+
+        System.out.println("Votre choix : [1], [2] ou [3] ?");
+        while(demande){
+        	
+        	Scanner reponse = new Scanner(System.in);
+        	entree = reponse.nextInt();
+            if(entree == 1){
+                    demande = false;
+                    AfficherRegles();
+   
+                }else if(entree == 2) {
+                	AfficherMenu();
+                	demande = false;
+                }else if(entree == 3) {
+                	System.out.println("Merci d'avoir jour, a bientot !");
+                	demande = false;
+                }else{
+                    System.out.println("Veuillez saisir 1, 2 ou 3");
+                }
+        }
+		return entree;
+    }
+
+    
+    static String AfficherPions(){
+		try
+	    {
+			
+	      // Le fichier d'entrée pour afficher le menu du jeu
+	      FileInputStream file = new FileInputStream("res/pions.txt");   
+	      Scanner scanner = new Scanner(file);  
+	      
+	      //renvoie true s'il y a une autre ligne à lire
+	      while(scanner.hasNextLine())
+	      {
+	        System.out.println(scanner.nextLine());
+	      }
+	      scanner.close();    
+	    }
+	    catch(IOException e)
+	    {
+	      e.printStackTrace();
+	    }
+	  
+		try {
+			int choixPions = readIntPions();
+		} catch (Exception e) {
+			System.out.println("Nous n'avons pas compris votre choix.");
+			int choixPions = readIntPions();
+		}
+		return null;   
+	}
+    
 
 	
     public static void main(String[] args) {

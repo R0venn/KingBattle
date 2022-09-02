@@ -1,0 +1,36 @@
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                               X
+X                xxxxxxxxxxxxxxxxx              X
+X                x   Les pions   x              X
+X                xxxxxxxxxxxxxxxxx              X
+X                                               X
+X Le Roi                                        X
+X  - Possede une arme, peut tirer sur ses       X
+X adversaires.                                  X
+X  - Se déplace d'une case dans tout les sens.  X
+X  - Possede des points de vie.                 X
+X                                               X
+X                                               X
+X La Reine                                      X 
+X  - Se déplace sans limite, devant, derriere,  X
+X sur les cotes et dans toutes les diagonales.  X
+X                                               X
+X Le fou                                        X
+X  - Se deplace en diagonale sans limite.       X
+X                                               X
+X                                               X
+X La tour                                       X
+X  - Se deplace vers les cases horizontales et  X
+X verticales sans limite.                       X
+X                                               X
+X Le cavalier                                   X
+X  - Se deplace en L.                           X
+X                                               X
+X Le pion                                       X
+X  - Se deplace d'une case en avant.            X
+X                                               X
+X   1 - Retour aux regles                       X
+X   2 - Retour au menu Principal                X
+X   3 - Quitter                                 X
+X                                               X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
