@@ -1,0 +1,20 @@
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                  X
+X         xxxxxxxxxxxxxxxxx        X
+X         x  King Battle  x        X
+X         xxxxxxxxxxxxxxxxx        X
+X                                  X
+X      xxxxxxxxxxxxxxxxxxxxx       X
+X      1 - Nouvelle Partie         X
+X      xxxxxxxxxxxxxxxxxxxxx       X
+X                                  X
+X      xxxxxxxxxxxxxxxxxxxxx       X
+X      2 - Consulter Regles        X
+X      xxxxxxxxxxxxxxxxxxxxx       X
+X                                  X
+X         xxxxxxxxxxxxxxx          X
+X         3 -  Quitter             X
+X         xxxxxxxxxxxxxxx          X
+X                                  X
+X                                  X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
