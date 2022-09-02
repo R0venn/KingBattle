@@ -15,10 +15,10 @@ public class GameManager {
 	private Game game;
 	private Player currentPlayer;
 	
-	public GameManager() {
+	public GameManager(String namePlayerOne, String namePlayerTwo) {
 		this.game = new Game();
-		this.game.getPlayers()[0] = new Player("John", PawnColors.WHITE);
-		this.game.getPlayers()[1] = new Player("Doe", PawnColors.BLACK);
+		this.game.getPlayers()[0] = new Player(namePlayerOne, PawnColors.WHITE);
+		this.game.getPlayers()[1] = new Player(namePlayerTwo, PawnColors.BLACK);
 		Player playerOne = this.game.getFirstPlayer();
 		Player playerTwo = this.game.getSecondPlayer();
 		playerOne.addPawn(new King(3,0));
