@@ -122,7 +122,7 @@ public abstract class BasePawn {
 		boolean res = false;
 		BasePawn pawnToAttack =  board.getPawn(x, y);
 		// s'il y a un piont aux coordonnées prises en paramètres, il est possible de l'attaquer.
-		if (pawnToAttack != null) {
+		if (pawnToAttack != null && this.rangeToAttack(pawnToAttack)) {
 			// on affecte la différence entre les pvs du pion ciblé et des dégâts de l'arme du pion courant à la vie du pion ciblé.
 			pawnToAttack.setHealth(Math.abs(pawnToAttack.getHealth() - this.getWeapon().getDamage()));
 			// si un piont tombe à 0 pv, il meurt et supprimé du plateau de jeu.
@@ -132,6 +132,15 @@ public abstract class BasePawn {
 			res = true;
 		}
 		return res;
+	}
+	
+	public boolean rangeToAttack(BasePawn pawnToAttack) {
+		boolean isInRange = false;
+		// Si le piont ciblé se situe dans la zone d'action du piont courant, alors le pion courant peut attaquer le pion ciblé
+		if (Math.abs(this.getX() - pawnToAttack.getX()) <= this.getWeapon().getRange() || Math.abs(this.getY() - pawnToAttack.getY()) <= this.getWeapon().getRange()) {
+			isInRange = true;
+		}
+		return isInRange;
 	}
 	
 }
