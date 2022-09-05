@@ -13,18 +13,87 @@ public class Player {
 	private int m_score;
 	private ArrayList<BasePawn> m_pawns;
 	private BasePawn currentPawn;
+	private int m_ap;
+	private int m_mp;
 	
 	public Player(String nickname, PawnColors color) {
 		this.m_nickname = nickname;
 		this.m_color = color;
 		this.m_score = 0;
 		this.m_pawns = new ArrayList<>();
+		this.resetPoints();
 	}
 	
 	public int getScore() { return this.m_score; }
 	public String getNickname() { return this.m_nickname; }
 	public PawnColors getColor() { return this.m_color; }
 	public ArrayList<BasePawn> getPawns() { return this.m_pawns; }
+	public BasePawn getCurrentPawn() { return this.currentPawn; }
+	public void setCurrentPawn(BasePawn pawn) { this.currentPawn = pawn; }
+	public void setMP(int mp) { this.m_mp = mp; }
+	public void setAP(int ap) { this.m_ap = ap; }
+	public int getMP() { return this.m_mp; }
+	public int getAP() { return this.m_ap; }
+	public void useMP() { if(this.canMove()) this.setMP(this.getMP()-1); }
+	public void useAP() { if(this.canAttack()) this.setAP(this.getAP()-1); }
+	
+	public void resetPawns() {
+		for(BasePawn pawn : this.getPawns()) {
+			pawn.resetPawn();
+		}
+	}
+	
+	public void checkCurrentPawnAlive() {
+		if(this.getCurrentPawn().isDead()) this.setCurrentPawn(this.getAlivePawns().get(0));
+	}
+	
+	public boolean canMove() {
+		return this.getMP() > 0;
+	}
+	
+	public boolean canAttack() {
+		return this.getAP() > 0;
+	}
+	
+	public boolean isFriendlyPawn(BasePawn pawn) {
+		int i = 0;
+		boolean res = false;
+		do {
+			if(this.getAlivePawns().get(i) == pawn) res = true;
+			i++;
+		} while (!res && i < this.getAlivePawns().size());
+		return res;
+	}
+	
+	public ArrayList<BasePawn> getAlivePawns() {
+		ArrayList<BasePawn> res = new ArrayList<>();
+		for(BasePawn pawn : this.getPawns()) {
+			if(!pawn.isDead()) {
+				res.add(pawn);
+			}
+		}
+		return res;
+	}
+	
+	public boolean canAction(ArrayList<BasePawn> opponentPawns) { return this.canMove() || (this.canAttack() && this.onePawnCanAttack(opponentPawns)); }
+	
+	public boolean onePawnCanAttack(ArrayList<BasePawn> opponentPawns) {
+		boolean res = false;
+		int i = 0;
+		ArrayList<BasePawn> pPawns = this.getPawns();
+		while(!res && i < pPawns.size()) {
+			if(pPawns.get(i).hasSomeoneInRange(opponentPawns)) {
+				res = true;
+			}
+			i++;
+		}
+		return res;
+	}
+	
+	public void resetPoints() {
+		this.m_ap = 1;
+		this.m_mp = 1;
+	}
 	
 	public boolean addPawn(BasePawn pawnToAdd) {
 		pawnToAdd.setColor(this.getColor());
@@ -37,8 +106,8 @@ public class Player {
 	
 	public void winGameMatch() {
 		this.m_score++;
-		System.out.println("Congratulation " + this.getNickname() + " you won the match and got 1 point!");
-		System.out.println("You have now " + this.getScore() + " points out of 3 :)");
+		System.out.println("Bravo " + this.getNickname() + " ! Vous gagnez le match et obtenez un point supplémentaire !");
+		System.out.println("Vous avez " + this.getScore() + "/3 points pour gagner la partie :)");
 	}
 
 	

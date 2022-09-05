@@ -1,4 +1,4 @@
-package add.game.menu;
+package app.game.menu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
