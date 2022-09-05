@@ -95,9 +95,7 @@ public class GameManager {
 	}
 	
 	public void nextMatch() {
-		this.game.swapBoards();
-		// congrats winner;
-		this.game.saveCurrentBoard();
+		//this.game.getBoard().resetPawns();
 	}
 	
 	public void nextRound() {
