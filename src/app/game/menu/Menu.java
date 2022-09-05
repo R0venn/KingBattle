@@ -2,7 +2,9 @@ package app.game.menu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import app.game.GameManager;
 import app.game.graphics.Board;
@@ -11,7 +13,6 @@ import app.game.players.Player;
 import core.Utils;
 
 public class Menu {
-
 	
 	public static String AfficherMenu(){
 		Utils.clearScreen();
@@ -19,7 +20,7 @@ public class Menu {
 	    {
 			
 	      // Le fichier d'entr�e pour afficher le menu du jeu
-	      FileInputStream file = new FileInputStream("/home/infoetu/cedric.larsonnier.etu/eclipse-workspace/groupe-16/res/menu.txt");   
+	      FileInputStream file = new FileInputStream("../res/menu.txt");   
 	      Scanner scanner = new Scanner(file);  
 	      
 	      //renvoie true s'il y a une autre ligne � lire
@@ -39,6 +40,72 @@ public class Menu {
 		} catch (Exception e) {
 			System.out.println("Nous n'avons pas compris votre choix.");
 			int choixMenu = readIntMenu();
+		}
+		return null;   
+	}
+	
+	static String AfficherRegles(){
+    	Utils.clearScreen();
+		try
+	    {
+			
+	      // Le fichier d'entr�e pour afficher le menu du jeu
+	      FileInputStream file = new FileInputStream("../res/regles.txt");   
+	      Scanner scanner = new Scanner(file);  
+	      
+	      //renvoie true s'il y a une autre ligne � lire
+	      while(scanner.hasNextLine())
+	      {
+	        System.out.println(scanner.nextLine());
+	      }
+	      scanner.close();    
+	    }
+	    catch(IOException e)
+	    {
+	      e.printStackTrace();
+	    }
+	  
+		try {
+			System.out.println();
+			int choixRegles = readIntRegles();
+			
+			if(choixRegles == 1) {
+				AfficherPions();
+			}
+		} catch (Exception e) {
+			System.out.println("Nous n'avons pas compris votre choix.");
+			int choixRegles = readIntRegles();
+		}
+		return null;   
+	
+	}
+	
+	static String AfficherPions(){
+    	Utils.clearScreen();
+		try
+	    {
+			
+	      // Le fichier d'entr�e pour afficher le menu du jeu
+	      FileInputStream file = new FileInputStream("../res/pions.txt");   
+	      Scanner scanner = new Scanner(file);  
+	      
+	      //renvoie true s'il y a une autre ligne � lire
+	      while(scanner.hasNextLine())
+	      {
+	        System.out.println(scanner.nextLine());
+	      }
+	      scanner.close();    
+	    }
+	    catch(IOException e)
+	    {
+	      e.printStackTrace();
+	    }
+	  
+		try {
+			int choixPions = readIntPions();
+		} catch (Exception e) {
+			System.out.println("Nous n'avons pas compris votre choix.");
+			int choixPions = readIntPions();
 		}
 		return null;   
 	}
@@ -89,40 +156,7 @@ public class Menu {
     
     // Afficher les regles
     
-    static String AfficherRegles(){
-		try
-	    {
-			
-	      // Le fichier d'entr�e pour afficher le menu du jeu
-	      FileInputStream file = new FileInputStream("res/regles.txt");   
-	      Scanner scanner = new Scanner(file);  
-	      
-	      //renvoie true s'il y a une autre ligne � lire
-	      while(scanner.hasNextLine())
-	      {
-	        System.out.println(scanner.nextLine());
-	      }
-	      scanner.close();    
-	    }
-	    catch(IOException e)
-	    {
-	      e.printStackTrace();
-	    }
-	  
-		try {
-			System.out.println();
-			int choixRegles = readIntRegles();
-			if(choixRegles == 1) {
-				System.out.println("Support en cours de r�daction.");
-				AfficherPions();
-			}
-		} catch (Exception e) {
-			System.out.println("Nous n'avons pas compris votre choix.");
-			int choixRegles = readIntRegles();
-		}
-		return null;   
-	
-	}
+    
     
     
     // Renvoie l'entier associ� au choix de l'utilisateur, s'il est valide
@@ -143,7 +177,7 @@ public class Menu {
                 	AfficherMenu();
                 	demande = false;
                 }else if(entree == 3) {
-                	System.out.println("Merci d'avoir jour, a bientot !");
+                	System.out.println("Merci d'avoir joue, a bientot !");
                 	demande = false;
                 }else{
                     System.out.println("Veuillez saisir 1, 2 ou 3");
@@ -178,43 +212,5 @@ public class Menu {
                 }
         }
 		return entree;
-    }
-
-    
-    static String AfficherPions(){
-		try
-	    {
-			
-	      // Le fichier d'entr�e pour afficher le menu du jeu
-	      FileInputStream file = new FileInputStream("res/pions.txt");   
-	      Scanner scanner = new Scanner(file);  
-	      
-	      //renvoie true s'il y a une autre ligne � lire
-	      while(scanner.hasNextLine())
-	      {
-	        System.out.println(scanner.nextLine());
-	      }
-	      scanner.close();    
-	    }
-	    catch(IOException e)
-	    {
-	      e.printStackTrace();
-	    }
-	  
-		try {
-			int choixPions = readIntPions();
-		} catch (Exception e) {
-			System.out.println("Nous n'avons pas compris votre choix.");
-			int choixPions = readIntPions();
-		}
-		return null;   
-	}
-    
-
-	
-    public static void main(String[] args) {
-    
-    	AfficherMenu();
-    
     }
 }
