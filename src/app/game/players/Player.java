@@ -37,6 +37,12 @@ public class Player {
 	public void useMP() { if(this.canMove()) this.setMP(this.getMP()-1); }
 	public void useAP() { if(this.canAttack()) this.setAP(this.getAP()-1); }
 	
+	public void resetPawns() {
+		for(BasePawn pawn : this.getPawns()) {
+			pawn.resetPawn();
+		}
+	}
+	
 	public boolean canMove() {
 		return this.getMP() > 0;
 	}

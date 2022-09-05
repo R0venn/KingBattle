@@ -108,4 +108,12 @@ public class Board {
 		this.pawns[oldY][oldX] = null;
 		this.displayBoard();
 	}
+	
+	public void resetBoard() {
+		for(int y = 0; y < this.pawns.length; y++) {
+			for(int x = 0; x < this.pawns[0].length; x++) {
+				this.pawns[y][x] = null;
+			}
+		}
+	}
 }

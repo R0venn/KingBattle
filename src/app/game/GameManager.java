@@ -21,8 +21,8 @@ public class GameManager {
 		Player playerOne = this.game.getFirstPlayer();
 		Player playerTwo = this.game.getSecondPlayer();
 		this.game.setCurrentPlayer(playerOne);
-		playerOne.addPawn(new King(3,0));
-		playerTwo.addPawn(new King(3,7));
+		playerOne.addPawn(new King());
+		playerTwo.addPawn(new King());
 		playerOne.setCurrentPawn(playerOne.getKing());
 		playerTwo.setCurrentPawn(playerTwo.getKing());
 	}
@@ -30,8 +30,8 @@ public class GameManager {
 	public Game getGame() { return this.game; }
 	
 	public void startGame() {
-		this.popPawns();
 		while(!this.onePlayerWon()) {
+			this.popPawns();
 			while(!this.isMatchEnd()) {
 				this.matchLoop();
 				this.nextRound();
@@ -63,7 +63,7 @@ public class GameManager {
 					this.moveTarget(currentPlayer);
 					break;
 			}
-		} while(choice != 0 && currentPlayer.canAction(this.game.getOpponent().getPawns()));
+		} while(!this.isMatchEnd() && choice != 0 && currentPlayer.canAction(this.game.getOpponent().getPawns()));
 	}
 	
 	public void attackTarget(Player currentPlayer) {
@@ -95,7 +95,7 @@ public class GameManager {
 	}
 	
 	public void nextMatch() {
-		//this.game.getBoard().resetPawns();
+		this.game.getBoard().resetBoard();
 	}
 	
 	public void nextRound() {
@@ -108,6 +108,8 @@ public class GameManager {
 	}
 	
 	public void popPawns() {
+		this.game.getFirstPlayer().resetPawns();
+		this.game.getSecondPlayer().resetPawns();
 		Board board = this.game.getBoard();
 		ArrayList<BasePawn> playerOnePawns = this.game.getFirstPlayer().getPawns();
 		ArrayList<BasePawn> playerTwoPawns = this.game.getSecondPlayer().getPawns();

@@ -48,6 +48,7 @@ public abstract class BasePawn {
 	public void setY(int newY) { this.m_y = newY; }
 	
 	public String getColor() { return this.m_color.getColor(); }
+	public PawnColors getBaseColor() { return this.m_color; }
 	
 	public boolean isDead() {
 		return this.getHealth() <= 0;
@@ -200,5 +201,6 @@ public abstract class BasePawn {
 	}
 	
 	public abstract boolean canMoveTo(int x, int y);
+	public abstract void resetPawn();
 	
 }

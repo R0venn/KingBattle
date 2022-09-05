@@ -12,9 +12,7 @@ import app.game.players.Player;
 
 public class Game {	
 	private Board board;
-	private Board saveBoard;
 	private Player[] players;
-	public static final BasePawn[] PAWNS_AVAILABLES = new BasePawn[] {new Bishop(0,0), new Knight(0,0), new Pawn(0,0), new Queen(0,0), new Rook(0,0)};
 	private Player currentPlayer;
 	
 	public Game() {
