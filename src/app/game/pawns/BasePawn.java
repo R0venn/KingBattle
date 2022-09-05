@@ -1,7 +1,10 @@
 package app.game.pawns;
 
+import java.util.ArrayList;
+
 import app.game.graphics.Board;
 import app.game.weapons.BaseWeapon;
+import core.Utils;
 
 public abstract class BasePawn {
 	/**
@@ -118,22 +121,41 @@ public abstract class BasePawn {
 		return this.m_model;
 	}
 	
+	/* Should be deprecated */
 	public boolean attack(int x, int y, Board board) {
 		boolean res = false;
 		BasePawn pawnToAttack =  board.getPawn(x, y);
-		// s'il y a un piont aux coordonnées prises en paramètres, il est possible de l'attaquer.
-		if (pawnToAttack != this && pawnToAttack != null && this.rangeToAttack(pawnToAttack)) {
-			// on affecte la différence entre les pvs du pion ciblé et des dégâts de l'arme du pion courant à la vie du pion ciblé.
-			pawnToAttack.setHealth(Math.abs(pawnToAttack.getHealth() - this.getWeapon().getDamage()));
-			// si un piont tombe à 0 pv, il meurt et supprimé du plateau de jeu.
-			if (pawnToAttack.isDead()) {
-				pawnToAttack = null;
+		
+		if(pawnToAttack != this) {
+			if(pawnToAttack != null) {
+				if(this.rangeToAttack(pawnToAttack)) {
+					int weaponDamage = this.getWeapon().getDamage();
+					int newHealth = pawnToAttack.getHealth() - weaponDamage;
+					pawnToAttack.setHealth(newHealth);
+					Utils.info("Tu as touché le " + pawnToAttack.getModel() + " pour " + weaponDamage + " points de vie !\nIl lui en reste "+newHealth);
+					res = true;
+				} else {
+					Utils.info("Cette unité est trop loin !");
+				}
+			} else {
+				Utils.info("Il n'y a personne à attaquer :(");
 			}
-			res = true;
 		} else {
-			System.out.println("Tu ne peux pas attaquer cette cible :(");
+			Utils.info("Tu ne peux pas t'attaquer toi même !");
 		}
+		Utils.sleep(2);
 		return res;
+	}
+	
+	public void attack(BasePawn target) {
+		if(this.rangeToAttack(target)) {
+			int initHealth = target.getHealth();
+			int weaponDamage = this.getWeapon().getDamage();
+			int newHealth = initHealth - weaponDamage;
+			target.setHealth(newHealth);
+			Utils.info("Tu as touché le " + target.getModel() + " adverse pour " + weaponDamage + " points de vie !\nIl lui en reste "+newHealth);
+			Utils.sleep(2);
+		}
 	}
 	
 	public boolean rangeToAttack(BasePawn pawnToAttack) {
@@ -147,6 +169,46 @@ public abstract class BasePawn {
 		if(distX > weaponRange || distY > weaponRange) inRange = false;
 		
 		return inRange;
+	}
+	
+	public ArrayList<BasePawn> getPawnsInAttackRange(ArrayList<BasePawn> pawns) {
+		ArrayList<BasePawn> res = new ArrayList<>();
+		for(BasePawn pawn : pawns) {
+			if(this.rangeToAttack(pawn)) {
+				res.add(pawn);
+			}
+		}
+		return res;
+	}
+	
+	public boolean hasSomeoneInRange(ArrayList<BasePawn> pawns) {
+		boolean res = false;
+		int i = 0;
+		do {
+			if(this.rangeToAttack(pawns.get(i))) {
+				res = true;
+			}
+			i++;
+		} while(!res && i < pawns.size());
+		return res;
+	}
+	
+	public int[] getAbsoluteDistance(int x, int y) {
+		int xDist = Math.abs(x - this.getX());
+		int yDist = Math.abs(y - this.getY());
+		return new int[] {yDist, xDist};
+	}
+	
+	public boolean canMoveTo(int x, int y) {
+		int[] absoluteDist = this.getAbsoluteDistance(x, y);
+		int xDist = absoluteDist[0]; int yDist = absoluteDist[1];
+		return xDist <= 2 && yDist <= 2;
+		//queen return (xDist == yDist) || ((xDist <= 5 && yDist == 0) || (xDist == 0 && yDist <= 5));
+		//bishop return xDist == yDist;
+		//rook return (xDist <= 5 && yDist == 0) || (xDist == 0 && yDist <= 5);
+		//pawn return xDist == 1 && yDist == 0;
+		//king return xDist <= 1 && yDist <= 1;
+		//knight return ((xDist == 2 && yDist == 1) || (xDist <= 2 && yDist == 0)) || ((yDist == 2 && xDist == 1) || (yDist <= 2 && xDist == 0));
 	}
 	
 }
