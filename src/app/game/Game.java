@@ -18,7 +18,7 @@ public class Game {
 	private Player currentPlayer;
 	
 	public Game() {
-		this.board = new Board();
+		this.board = new Board(this);
 		this.players = new Player[2];
 	}
 	
@@ -28,4 +28,8 @@ public class Game {
 	public Player getSecondPlayer() { return this.getPlayers()[1]; }
 	public Player getCurrentPlayer() { return this.currentPlayer; }
 	public void setCurrentPlayer(Player player) { this.currentPlayer = player; }
+	
+	public Player getOpponent() {
+		return this.getFirstPlayer() == this.getCurrentPlayer() ? this.getSecondPlayer() : this.getFirstPlayer();
+	}
 }

@@ -2,7 +2,7 @@ package app.game.pawns;
 import core.ConsoleColors;
 
 public enum PawnColors {
-	WHITE(ConsoleColors.WHITE_BACKGROUND),
+	WHITE(ConsoleColors.WHITE_BACKGROUND_BRIGHT),
 	BLACK(ConsoleColors.BLACK_BACKGROUND);
 	
 	private String color;
@@ -13,5 +13,9 @@ public enum PawnColors {
 
 	String getColor() {
 		return color;
+	}
+	
+	public String toString() {
+		return this == PawnColors.BLACK ? "noir" : "blanc";
 	}
 }
