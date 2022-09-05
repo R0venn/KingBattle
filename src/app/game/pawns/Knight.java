@@ -24,7 +24,7 @@ public class Knight extends BasePawn{
 	}
 	
 	public void resetPawn() {
-		PawnPosition pos = PawnPosition.QUEEN;
+		PawnPosition pos = PawnPosition.KNIGHT;
 		this.setHealth(150);
 		this.setArmor(25);
 		this.setWeapon(new Sword());

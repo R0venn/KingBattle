@@ -14,7 +14,7 @@ public class Pawn extends BasePawn{
 	 * @param model
 	 */
 	public Pawn() {
-		super(50, 0, new Gun(), "♗", 0, 0);
+		super(50, 0, new Gun(), "♙", 0, 0);
 	}
 
 	public boolean canMoveTo(int x, int y) {

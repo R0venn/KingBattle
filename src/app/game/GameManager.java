@@ -53,29 +53,42 @@ public class GameManager {
 		menuChoices.add("Passer mon tour");
 		menuChoices.add("Bouger mon pion");
 		menuChoices.add("Selectionner un autre pion");
+		menuChoices.add("Attaquer une cible");
 		do {
-			if(currentPlayer.canAttack() && currentPlayer.getCurrentPawn().hasSomeoneInRange(game.getOpponent().getAlivePawns())) {
-				menuChoices.add("Attaquer une cible");
-			}
+			boolean canAttack = currentPlayer.canAttack() && currentPlayer.getCurrentPawn().hasSomeoneInRange(game.getOpponent().getAlivePawns());
 			this.game.getBoard().displayBoard(2);
-			Utils.info(currentPlayer.getNickname() + " que voulez vous faire ?");
+			Utils.error("\n"+currentPlayer.getNickname()+", vous controlez votre : " + currentPlayer.getCurrentPawn().getModel());
 			for(int i = 0; i < menuChoices.size(); i++) {
 				System.out.println(i+". "+menuChoices.get(i)+".");
 			}
 			do {
-				choice = currentPlayer.askDigit();
+				choice = currentPlayer.askDigit("Quelle action voulez-vous faire ?");
 			} while(choice < 0 || (choice > menuChoices.size()-1));
 			switch(choice) {
 				case 1:
-					this.moveTarget(currentPlayer);
+					if(currentPlayer.canMove()) {
+						this.moveTarget(currentPlayer);
+					} else {
+						Utils.info("Vous n'avez plus de PM (points de mouvement) disponible.");
+						Utils.sleep(2);
+					}
 					break;
 				case 2:
 					this.choicePawn(currentPlayer);
 					break;
 				case 3:
-					this.attackTarget(currentPlayer);
-					this.game.getBoard().updateBoard();
-					this.game.getOpponent().checkCurrentPawnAlive();
+					if(canAttack) {						
+						this.attackTarget(currentPlayer);
+						this.game.getBoard().updateBoard();
+						this.game.getOpponent().checkCurrentPawnAlive();
+					} else {
+						if(!currentPlayer.canAttack()) {
+							Utils.info("Vous n'avez plus de PA (points d'action) disponbile.");
+						} else {
+							Utils.info("Aucun ennemi à portée (les ennemis à portée sont affiché en rouge)");
+						}
+						Utils.sleep(2);
+					}
 					break;
 			}
 		} while(!this.isMatchEnd() && choice != 0 && currentPlayer.canAction(this.game.getOpponent().getPawns()));
@@ -89,7 +102,7 @@ public class GameManager {
 		}
 		int nextPawnIndex;
 		do {
-			nextPawnIndex = currentPlayer.askDigit();
+			nextPawnIndex = currentPlayer.askDigit("Quel pion souhaitez-vous controler ? (ex: 0)");
 		}while(nextPawnIndex < 0 || nextPawnIndex > currentPlayerPawns.size()-1);
 		currentPlayer.setCurrentPawn(currentPlayerPawns.get(nextPawnIndex));
 	}
@@ -98,14 +111,13 @@ public class GameManager {
 		ArrayList<BasePawn> availableTargets = currentPlayer.getCurrentPawn().getPawnsInAttackRange(game.getOpponent().getAlivePawns());
 		BasePawn toDisplay;
 		this.game.getBoard().displayBoard(2);
-		Utils.info("Quelle pièce souhaitez-vous attaquer ?");
 		for(int i = 0; i < availableTargets.size(); i++) {
 			toDisplay = availableTargets.get(i);
 			System.out.println(i+". "+toDisplay.getModel()+" ("+ toDisplay.getHealth() +"pv)");
 		}
 		int targetId;
 		do {
-			targetId = currentPlayer.askDigit();
+			targetId = currentPlayer.askDigit("Quelle pièce souhaitez-vous attaquer ? (ex: 0)");
 		} while(targetId < 0 || targetId >= availableTargets.size());
 		BasePawn target = availableTargets.get(targetId);
 		currentPlayer.getCurrentPawn().attack(target);
@@ -114,8 +126,7 @@ public class GameManager {
 	
 	public void moveTarget(Player currentPlayer) {
 		this.game.getBoard().displayBoard(1);
-		Utils.info("Ou souhaitez vous vous déplacer ?");
-		int[] coordinates = currentPlayer.askCoordinates();
+		int[] coordinates = currentPlayer.askCoordinates("Sur quelle case souhaitez-vous allez ? (ex: b5)");
 		int posX = coordinates[0];
 		int posY = coordinates[1];
 		BasePawn toMove = currentPlayer.getCurrentPawn();
@@ -167,9 +178,11 @@ public class GameManager {
 	
 	public void congratRoundWinner() {
 		Player winner = this.game.getFirstPlayer().getKing().isDead() ? this.game.getSecondPlayer() : this.game.getFirstPlayer();
+		Player loser = this.game.getFirstPlayer() == winner ? this.game.getSecondPlayer() : this.game.getFirstPlayer();
 		winner.winGameMatch();
-		winner.addPawn(this.game.pickRandomPawn());
-		Utils.sleep(3);
+		winner.addPawn(this.game.pickRandomPawn(winner));
+		loser.addPawn(this.game.pickRandomPawn(loser));
+		Utils.sleep(2);
 	}
 	
 	public void congratMatchWinner() {

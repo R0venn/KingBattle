@@ -15,14 +15,15 @@ import app.game.players.Player;
 import core.Utils;
 
 public class Game {	
-	public final static int ROUND_TO_WIN = 1;
+	public final static int ROUND_TO_WIN = 3;
 	
 	private Board board;
 	private Board saveBoard;
 	private Player[] players;
 	private Player currentPlayer;
 	
-	public static ArrayList<BasePawn> availablePawns = new ArrayList<>(Arrays.asList(new Bishop(), new Knight(), new Queen(), new Rook()));
+	public static ArrayList<BasePawn> availablePawnsOne = new ArrayList<>(Arrays.asList(new Bishop(), new Knight(), new Queen(), new Rook()));
+	public static ArrayList<BasePawn> availablePawnsTwo = new ArrayList<>(Arrays.asList(new Bishop(), new Knight(), new Queen(), new Rook()));
 	
 	public Game() {
 		this.board = new Board(this);
@@ -38,9 +39,11 @@ public class Game {
 	public Board getSavedBoard() { return this.saveBoard; }
 	public void setCurrentPlayer(Player player) { this.currentPlayer = player; }
 	
-	public BasePawn pickRandomPawn() {
-		int random = Utils.randInt(0, Game.availablePawns.size());
-		BasePawn pawn = Game.availablePawns.get(random);
+	public BasePawn pickRandomPawn(Player player) {
+		ArrayList<BasePawn> pawnsAvailable = player == this.getFirstPlayer() ? Game.availablePawnsOne : Game.availablePawnsTwo;
+		int random = Utils.randInt(0, pawnsAvailable.size());
+		BasePawn pawn = pawnsAvailable.get(random);
+		pawnsAvailable.remove(random);
 		return pawn;
 	}
 	

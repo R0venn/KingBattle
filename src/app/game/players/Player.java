@@ -145,24 +145,32 @@ public class Player {
 		return res;
 	}
 	
-	public int[] askCoordinates() {
+	public int[] askCoordinates(String message) {
 		int[] res = new int[2];
 		Scanner scanner = new Scanner(System.in);
 		String userInput;
 		do {
-			System.out.println("Entrez des coordonées (ex : b7)");
+			System.out.println(message);
 			userInput = scanner.nextLine();
 		} while(!Utils.areValidsCoordinates(userInput));
 		return Utils.computeCoordinates(userInput);
 	}
 	
-	public int askDigit() {
+	public int[] askCoordinates() {
+		return this.askCoordinates("Entrez des coordonées (ex : b7)");
+	}
+	
+	public int askDigit(String message) {
 		String userInput;
 		Scanner scanner = new Scanner(System.in);
 		do {
-			System.out.println("Entrez votre choix :");
+			System.out.println(message);
 			userInput = scanner.nextLine();
 		} while(!Utils.isValidDigit(userInput));
 		return Integer.parseInt(userInput);
+	}
+	
+	public int askDigit() {
+		return this.askDigit("Entrez votre choix : ");
 	}
 }

@@ -67,7 +67,7 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public void setHealth(int health) {
-		this.m_health = health;
+		this.m_health = health < 0 ? 0 : health;
 	}
 	
 	/**

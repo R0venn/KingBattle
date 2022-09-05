@@ -6,7 +6,7 @@ import app.game.weapons.Dagger;
 public class Bishop extends BasePawn{
 	
 	public Bishop() {
-		super(75, 15, new Dagger(), "♙", 0, 0);
+		super(75, 15, new Dagger(), "♗", 0, 0);
 	}
 
 	public boolean canMoveTo(int x, int y) {

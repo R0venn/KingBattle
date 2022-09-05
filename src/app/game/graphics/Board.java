@@ -5,6 +5,7 @@ import java.util.Arrays;
 import app.game.Game;
 import app.game.pawns.BasePawn;
 import app.game.pawns.PawnColors;
+import app.game.players.Player;
 import core.ConsoleColors;
 import core.Utils;
 
@@ -46,22 +47,27 @@ public class Board {
 	public void displayBoard(int mode) {
 		Utils.clearScreen();
 		System.out.println("   (a  b  c  d  e  f  g  h)");
+		Player firstPlayer = game.getFirstPlayer();
+		Player secondPlayer = game.getSecondPlayer();
+		Player currentPlayer = game.getCurrentPlayer();
+		BasePawn firstPlayerKing = firstPlayer.getKing();
+		BasePawn secondPlayerKing = secondPlayer.getKing();
 		for(int y = 0; y < this.pawns.length; y++) {
 			System.out.print("("+(y+1)+")");
 			for(int x = 0; x < this.pawns[0].length; x++) {
 				this.displayCase(x,y,mode);
 			}
 			if(game != null) {
-				if(y == 1) {
-					System.out.print(" Roi blanc : " + game.getFirstPlayer().getKing().getHealth() + " pv");
-				} else if(y == 2) {
-					System.out.print(" Roi noir  : " + game.getSecondPlayer().getKing().getHealth() + " pv");
+				if(y == 2){
+					System.out.print(" (Manche "+ (firstPlayer.getScore()+secondPlayer.getScore())+1 + ") Le premier à " + Game.ROUND_TO_WIN + " points gagne la partie !");
 				} else if(y == 3) {
-					System.out.print(" C'est aux " + game.getCurrentPlayer().getColor() + " de jouer.");
+					System.out.print(" "+ConsoleColors.WHITE_BACKGROUND_BRIGHT + " ♔ " + ConsoleColors.RESET + firstPlayerKing.getHealth() + " pv" + ConsoleColors.BLACK_BACKGROUND + " ♔ " + ConsoleColors.RESET + " - " + secondPlayerKing.getHealth() + " pv" + ConsoleColors.RESET);
 				} else if(y == 4) {
-					System.out.print(" Les " + game.getCurrentPlayer().getColor() + " controlent actuellement le " + game.getCurrentPlayer().getCurrentPawn().getModel());
+					System.out.print(" "+firstPlayer.getNickname()+": "+firstPlayer.getScore()+" points | " + secondPlayer.getNickname() + ": "+secondPlayer.getScore()+" points.");
 				} else if(y == 5) {
-					System.out.print(" Vous avez : " + game.getCurrentPlayer().getAP() + " AP " + game.getCurrentPlayer().getMP() + " MP");
+					System.out.print(" C'est aux " + currentPlayer.getColor() + " de jouer.");
+				} else if(y == 6) {
+					System.out.print(" Vous avez : " + currentPlayer.getAP() + " AP " + game.getCurrentPlayer().getMP() + " MP");
 				}
 			}
 			System.out.println();
