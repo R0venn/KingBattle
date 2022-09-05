@@ -2,6 +2,7 @@ package app.game.bonus;
 
 import java.util.Random;
 
+import app.game.Game;
 import app.game.pawns.BasePawn;
 
 public class CriticalDmgCard implements ICard{
@@ -12,9 +13,9 @@ public class CriticalDmgCard implements ICard{
 	}
 
 	@Override
-	public void use(BasePawn pawn) {
-		int dmg = pawn.getWeapon().getDamage(); 
-		pawn.getWeapon().setDamage((int) Math.abs((dmg + (dmg*0.2))));
+	public void use(Game game) {
+		int dmg = game.getCurrentPlayer().getCurrentPawn().getWeapon().getDamage(); 
+		game.getCurrentPlayer().getCurrentPawn().getWeapon().setDamage((int) Math.abs((dmg + (dmg*0.2))));
 	}
 
 
