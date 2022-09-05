@@ -15,4 +15,9 @@ public class Queen extends BasePawn{
 		super(175, 25, null, "♕", x, y);
 	}
 
+	public boolean canMoveTo(int x, int y) {
+		int[] absoluteDist = this.getAbsoluteDistance(x, y);
+		int xDist = absoluteDist[0]; int yDist = absoluteDist[1];
+		return (xDist == yDist) || ((xDist <= 5 && yDist == 0) || (xDist == 0 && yDist <= 5));
+	}
 }

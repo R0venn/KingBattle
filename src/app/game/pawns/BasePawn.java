@@ -199,16 +199,6 @@ public abstract class BasePawn {
 		return new int[] {yDist, xDist};
 	}
 	
-	public boolean canMoveTo(int x, int y) {
-		int[] absoluteDist = this.getAbsoluteDistance(x, y);
-		int xDist = absoluteDist[0]; int yDist = absoluteDist[1];
-		return xDist <= 2 && yDist <= 2;
-		//queen return (xDist == yDist) || ((xDist <= 5 && yDist == 0) || (xDist == 0 && yDist <= 5));
-		//bishop return xDist == yDist;
-		//rook return (xDist <= 5 && yDist == 0) || (xDist == 0 && yDist <= 5);
-		//pawn return xDist == 1 && yDist == 0;
-		//king return xDist <= 1 && yDist <= 1;
-		//knight return ((xDist == 2 && yDist == 1) || (xDist <= 2 && yDist == 0)) || ((yDist == 2 && xDist == 1) || (yDist <= 2 && xDist == 0));
-	}
+	public abstract boolean canMoveTo(int x, int y);
 	
 }
