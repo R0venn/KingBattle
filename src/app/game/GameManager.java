@@ -37,7 +37,7 @@ public class GameManager {
 				this.nextRound();
 			}
 			this.congratRoundWinner();
-			this.resetBoard();
+			this.nextMatch();
 		}
 	}
 	
@@ -52,7 +52,7 @@ public class GameManager {
 			} while(choice < 0 || choice > 2);
 			switch(choice) {
 				case 1:
-					if(currentPlayer.getCurrentPawn().hasSomeoneInRange(game.getOpponent().getPawns())) {
+					if(currentPlayer.canAttack() && currentPlayer.getCurrentPawn().hasSomeoneInRange(game.getOpponent().getPawns())) {
 						this.attackTarget(currentPlayer);
 					} else {
 						Utils.info("Cette unité ne peut attaquer personne");
@@ -95,7 +95,9 @@ public class GameManager {
 	}
 	
 	public void nextMatch() {
-		
+		this.game.swapBoards();
+		// congrats winner;
+		this.game.saveCurrentBoard();
 	}
 	
 	public void nextRound() {
@@ -138,10 +140,6 @@ public class GameManager {
 		Player winner = this.game.getFirstPlayer().getKing().isDead() ? this.game.getSecondPlayer() : this.game.getFirstPlayer();
 		winner.winGameMatch();
 		Utils.sleep(3);
-	}
-	
-	public void resetBoard() {
-		
 	}
 	
 	public boolean isMatchEnd() {

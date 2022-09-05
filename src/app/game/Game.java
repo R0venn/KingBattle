@@ -12,14 +12,15 @@ import app.game.players.Player;
 
 public class Game {	
 	private Board board;
+	private Board saveBoard;
 	private Player[] players;
 	public static final BasePawn[] PAWNS_AVAILABLES = new BasePawn[] {new Bishop(0,0), new Knight(0,0), new Pawn(0,0), new Queen(0,0), new Rook(0,0)};
-	private int gameRound;
 	private Player currentPlayer;
 	
 	public Game() {
 		this.board = new Board(this);
 		this.players = new Player[2];
+		this.saveCurrentBoard();
 	}
 	
 	public Board getBoard() { return this.board; }
@@ -27,7 +28,16 @@ public class Game {
 	public Player getFirstPlayer() { return this.getPlayers()[0]; }
 	public Player getSecondPlayer() { return this.getPlayers()[1]; }
 	public Player getCurrentPlayer() { return this.currentPlayer; }
+	public Board getSavedBoard() { return this.saveBoard; }
 	public void setCurrentPlayer(Player player) { this.currentPlayer = player; }
+	
+	public void saveCurrentBoard() {
+		this.saveBoard = new Board(this.board);
+	}
+	
+	public void swapBoards() {
+		this.board = new Board(this.getSavedBoard());
+	}
 	
 	public Player getOpponent() {
 		return this.getFirstPlayer() == this.getCurrentPlayer() ? this.getSecondPlayer() : this.getFirstPlayer();
