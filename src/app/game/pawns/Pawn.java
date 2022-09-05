@@ -16,4 +16,9 @@ public class Pawn extends BasePawn{
 		super(50, 0, new Gun(), "♗", x, y);
 	}
 
+	public boolean canMoveTo(int x, int y) {
+		int[] absoluteDist = this.getAbsoluteDistance(x, y);
+		int xDist = absoluteDist[0]; int yDist = absoluteDist[1];
+		return xDist == 1 && yDist == 0;
+	}
 }
