@@ -1,8 +1,8 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 X                                               X
-X                xxxxxxxxxxxxxxxxx              X
-X                x Regles du jeu x              X
-X                xxxxxxxxxxxxxxxxx              X
+X               xxxxxxxxxxxxxxxxx               X
+X               x Regles du jeu x               X
+X               xxxxxxxxxxxxxxxxx               X
 X                                               X
 X Le jeu se deroule en 3 manches dans un combat X
 X 1 contre 1.                                   X
@@ -14,7 +14,7 @@ X Le but du jeu est simple, il faut eliminer le X
 X Roi adverse. Le joueur qui reussit gagne la   X
 X manche.                                       X
 X                                               X
-X Chaque Roi peut agir dans un rayon de 3 cases X
+X Chaque Roi peut agir dans un rayon de 1 cases X
 X vers la gauche, droite, haut et bas.          X
 X                                               X
 X Il peut realiser 2 types d'actions :          X

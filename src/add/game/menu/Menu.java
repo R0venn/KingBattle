@@ -205,7 +205,7 @@ public class Menu {
                 	AfficherMenu();
                 	demande = false;
                 }else if(entree == 3) {
-                	System.out.println("Merci d'avoir jour, a bientot !");
+                	System.out.println("Merci d'avoir joue, a bientot !");
                 	demande = false;
                 }else{
                     System.out.println("Veuillez saisir 1, 2 ou 3");
