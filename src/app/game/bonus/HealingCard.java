@@ -1,6 +1,6 @@
 package app.game.bonus;
 
-import app.game.pawns.BasePawn;
+import app.game.Game;
 
 public class HealingCard implements ICard{
 
@@ -10,9 +10,9 @@ public class HealingCard implements ICard{
 	}
 
 	@Override
-	public void use(BasePawn pawn) {
-		int health = pawn.getHealth();
-		pawn.setHealth(health+50);
+	public void use(Game game) {
+		int health = game.getCurrentPlayer().getCurrentPawn().getHealth();
+		game.getCurrentPlayer().getCurrentPawn().setHealth(health+50);
 	}
 
 }

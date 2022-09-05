@@ -1,5 +1,6 @@
 package app.game.bonus;
 
+import app.game.Game;
 import app.game.pawns.BasePawn;
 
 public class AddMPCard implements ICard{
@@ -10,8 +11,8 @@ public class AddMPCard implements ICard{
 	}
 
 	@Override
-	public void use(BasePawn pawn) {
-	
+	public void use(Game game) {
+		game.getCurrentPlayer().setMP(game.getCurrentPlayer().getMP()+1);
 	}
 
 }
