@@ -19,9 +19,7 @@ public class King extends BasePawn{
 	public boolean canMoveTo(int x, int y) {
 		int[] absoluteDist = this.getAbsoluteDistance(x, y);
 		int xDist = absoluteDist[0]; int yDist = absoluteDist[1];
-		//return xDist <= 1 && yDist <= 1;
-		return ((xDist == 2 && yDist == 1) || (xDist <= 2 && yDist == 0)) || ((yDist == 2 && xDist == 1) || (yDist <= 2 && xDist == 0) && ((xDist != 1 && yDist == 0)));
-		
+		return xDist <= 1 && yDist <= 0;
 	}
 
 }
