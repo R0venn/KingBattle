@@ -1,5 +1,6 @@
 package app.game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import app.game.graphics.Board;
@@ -42,6 +43,7 @@ public class GameManager {
 			}
 			this.nextMatch();
 		}
+		this.congratMatchWinner();
 	}
 	
 	public void matchLoop() {
@@ -170,11 +172,22 @@ public class GameManager {
 		Utils.sleep(3);
 	}
 	
+	public void congratMatchWinner() {
+		Player winner = this.game.getFirstPlayer().getScore() == Game.ROUND_TO_WIN ? this.game.getFirstPlayer() : this.game.getSecondPlayer();
+		Utils.debug("Le joueur '"+winner.getNickname() + "' gagne la partie !");
+		Player loser = this.game.getFirstPlayer() == winner ? this.game.getSecondPlayer() : this.game.getFirstPlayer();
+		try {
+			Utils.appendToLogFile(winner.getNickname() + " won a game against " + loser.getNickname() + " - "+winner.getScore() + " to " + loser.getScore());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public boolean isMatchEnd() {
 		return this.game.getFirstPlayer().getKing().isDead() || this.game.getSecondPlayer().getKing().isDead();
 	}
 	
 	public boolean onePlayerWon() {
-		return this.game.getFirstPlayer().getScore() == 3 || this.game.getSecondPlayer().getScore() == 3;		
+		return this.game.getFirstPlayer().getScore() == Game.ROUND_TO_WIN || this.game.getSecondPlayer().getScore() == Game.ROUND_TO_WIN;		
 	}
 }

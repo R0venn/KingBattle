@@ -1,6 +1,11 @@
 package core;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Random;
 
 
@@ -41,5 +46,11 @@ public abstract class Utils {
 		} catch (InterruptedException e) {
 			Utils.debug("Couldn't sleep thread for " + seconds + "s");
 		}
+	}
+	
+	public static void appendToLogFile(String log) throws IOException {
+		BufferedWriter writer = new BufferedWriter(new FileWriter("../logs/log.txt", true));
+		writer.append("[KingBattle LOGGER] "+log+"\n");
+		writer.close();
 	}
 }

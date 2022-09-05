@@ -15,6 +15,8 @@ import app.game.players.Player;
 import core.Utils;
 
 public class Game {	
+	public final static int ROUND_TO_WIN = 1;
+	
 	private Board board;
 	private Board saveBoard;
 	private Player[] players;

@@ -1,0 +1,2 @@
+[KingBattle LOGGER] Mehdi won a game against Alan - 1 to 0
+[KingBattle LOGGER] Mehdi won a game against Cedric - 1 to 0
