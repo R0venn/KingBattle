@@ -43,12 +43,36 @@ public class Player {
 		}
 	}
 	
+	public void checkCurrentPawnAlive() {
+		if(this.getCurrentPawn().isDead()) this.setCurrentPawn(this.getAlivePawns().get(0));
+	}
+	
 	public boolean canMove() {
 		return this.getMP() > 0;
 	}
 	
 	public boolean canAttack() {
 		return this.getAP() > 0;
+	}
+	
+	public boolean isFriendlyPawn(BasePawn pawn) {
+		int i = 0;
+		boolean res = false;
+		do {
+			if(this.getAlivePawns().get(i) == pawn) res = true;
+			i++;
+		} while (!res && i < this.getAlivePawns().size());
+		return res;
+	}
+	
+	public ArrayList<BasePawn> getAlivePawns() {
+		ArrayList<BasePawn> res = new ArrayList<>();
+		for(BasePawn pawn : this.getPawns()) {
+			if(!pawn.isDead()) {
+				res.add(pawn);
+			}
+		}
+		return res;
 	}
 	
 	public boolean canAction(ArrayList<BasePawn> opponentPawns) { return this.canMove() || (this.canAttack() && this.onePawnCanAttack(opponentPawns)); }

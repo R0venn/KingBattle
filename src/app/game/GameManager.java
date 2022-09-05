@@ -7,7 +7,9 @@ import app.game.pawns.BasePawn;
 import app.game.pawns.Bishop;
 import app.game.pawns.King;
 import app.game.pawns.Knight;
+import app.game.pawns.Pawn;
 import app.game.pawns.PawnColors;
+import app.game.pawns.Rook;
 import app.game.players.Player;
 import core.Utils;
 
@@ -22,7 +24,9 @@ public class GameManager {
 		Player playerTwo = this.game.getSecondPlayer();
 		this.game.setCurrentPlayer(playerOne);
 		playerOne.addPawn(new King());
+		playerOne.addPawn(new Pawn());
 		playerTwo.addPawn(new King());
+		playerTwo.addPawn(new Pawn());
 		playerOne.setCurrentPawn(playerOne.getKing());
 		playerTwo.setCurrentPawn(playerTwo.getKing());
 	}
@@ -36,7 +40,6 @@ public class GameManager {
 				this.matchLoop();
 				this.nextRound();
 			}
-			this.congratRoundWinner();
 			this.nextMatch();
 		}
 	}
@@ -44,30 +47,53 @@ public class GameManager {
 	public void matchLoop() {
 		Player currentPlayer = this.game.getCurrentPlayer();
 		int choice;
+		ArrayList<String> menuChoices = new ArrayList<>();
+		menuChoices.add("Passer mon tour");
+		menuChoices.add("Bouger mon pion");
+		menuChoices.add("Selectionner un autre pion");
 		do {
-			this.game.getBoard().displayBoard();
-			Utils.info(currentPlayer.getNickname() + " que voulez vous faire ?\n0. Passer mon tour\n1. Attaquer une cible\n2. Bouger mon "+currentPlayer.getCurrentPawn());
+			if(currentPlayer.canAttack() && currentPlayer.getCurrentPawn().hasSomeoneInRange(game.getOpponent().getAlivePawns())) {
+				menuChoices.add("Attaquer une cible");
+			}
+			this.game.getBoard().displayBoard(2);
+			Utils.info(currentPlayer.getNickname() + " que voulez vous faire ?");
+			for(int i = 0; i < menuChoices.size(); i++) {
+				System.out.println(i+". "+menuChoices.get(i)+".");
+			}
 			do {
 				choice = currentPlayer.askDigit();
-			} while(choice < 0 || choice > 2);
+			} while(choice < 0 || (choice > menuChoices.size()-1));
 			switch(choice) {
 				case 1:
-					if(currentPlayer.canAttack() && currentPlayer.getCurrentPawn().hasSomeoneInRange(game.getOpponent().getPawns())) {
-						this.attackTarget(currentPlayer);
-					} else {
-						Utils.info("Cette unité ne peut attaquer personne");
-						Utils.sleep(2);
-					}
+					this.moveTarget(currentPlayer);
 					break;
 				case 2:
-					this.moveTarget(currentPlayer);
+					this.choicePawn(currentPlayer);
+					break;
+				case 3:
+					this.attackTarget(currentPlayer);
+					this.game.getBoard().updateBoard();
+					this.game.getOpponent().checkCurrentPawnAlive();
 					break;
 			}
 		} while(!this.isMatchEnd() && choice != 0 && currentPlayer.canAction(this.game.getOpponent().getPawns()));
 	}
 	
+	public void choicePawn(Player currentPlayer) {
+		this.game.getBoard().displayBoard();
+		ArrayList<BasePawn> currentPlayerPawns = currentPlayer.getAlivePawns();
+		for(int i = 0; i < currentPlayerPawns.size(); i++) {
+			System.out.println(i+". " + currentPlayerPawns.get(i).getModel());
+		}
+		int nextPawnIndex;
+		do {
+			nextPawnIndex = currentPlayer.askDigit();
+		}while(nextPawnIndex < 0 || nextPawnIndex > currentPlayerPawns.size()-1);
+		currentPlayer.setCurrentPawn(currentPlayerPawns.get(nextPawnIndex));
+	}
+	
 	public void attackTarget(Player currentPlayer) {
-		ArrayList<BasePawn> availableTargets = currentPlayer.getCurrentPawn().getPawnsInAttackRange(game.getOpponent().getPawns());
+		ArrayList<BasePawn> availableTargets = currentPlayer.getCurrentPawn().getPawnsInAttackRange(game.getOpponent().getAlivePawns());
 		BasePawn toDisplay;
 		this.game.getBoard().displayBoard(2);
 		Utils.info("Quelle pièce souhaitez-vous attaquer ?");
@@ -95,13 +121,14 @@ public class GameManager {
 	}
 	
 	public void nextMatch() {
+		this.congratRoundWinner();
 		this.game.getBoard().resetBoard();
 	}
 	
 	public void nextRound() {
 		this.game.getBoard().displayBoard();
-		Utils.info("\nTour suivant !");
-		Utils.sleep(1);
+		Utils.debug("\nJoueur suivant !");
+		Utils.sleep(2);
 		Player nextPlayer = this.game.getCurrentPlayer() == game.getFirstPlayer() ? game.getSecondPlayer() : game.getFirstPlayer();
 		this.game.setCurrentPlayer(nextPlayer);
 		nextPlayer.resetPoints();
@@ -139,6 +166,7 @@ public class GameManager {
 	public void congratRoundWinner() {
 		Player winner = this.game.getFirstPlayer().getKing().isDead() ? this.game.getSecondPlayer() : this.game.getFirstPlayer();
 		winner.winGameMatch();
+		winner.addPawn(this.game.pickRandomPawn());
 		Utils.sleep(3);
 	}
 	

@@ -8,7 +8,7 @@ public enum PawnPosition {
 	KNIGHT(5,0),
 	BISHOP(1,0),
 	ROOK(0,0),
-	PAWN(4,1);
+	PAWN(2,0);
 
 	private int x;
 	private int y;

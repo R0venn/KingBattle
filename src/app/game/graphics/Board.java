@@ -31,6 +31,18 @@ public class Board {
 		return this.game;
 	}
 	
+	public void updateBoard() {
+		for(int y = 0; y < this.pawns.length; y++) {
+			for(int x = 0; x < this.pawns[0].length; x++) {
+				if(this.pawns[y][x] != null) {
+					if(this.getPawn(x, y).isDead()) {
+						this.pawns[y][x] = null;
+					}
+				}
+			}
+		}
+	}
+	
 	public void displayBoard(int mode) {
 		Utils.clearScreen();
 		System.out.println("   (a  b  c  d  e  f  g  h)");
@@ -73,7 +85,7 @@ public class Board {
 				if(currentPlayerPawn.canMoveTo(x, y)) currentCaseColor = ConsoleColors.GREEN_BACKGROUND;
 			}
 		case 2:
-			if(this.isPawn(x, y) && !(currentCasePawn == currentPlayerPawn) && currentPlayerPawn.rangeToAttack(currentCasePawn)) currentCaseColor = ConsoleColors.RED_BACKGROUND_BRIGHT;
+			if(this.isPawn(x, y) && !(currentCasePawn == currentPlayerPawn) && !(this.getGame().getCurrentPlayer().isFriendlyPawn(currentCasePawn)) && currentPlayerPawn.rangeToAttack(currentCasePawn)) currentCaseColor = ConsoleColors.RED_BACKGROUND_BRIGHT;
 		}
 		System.out.print(currentCaseColor + " " + currentCaseSymbol+ " " + ConsoleColors.RESET);
 	}

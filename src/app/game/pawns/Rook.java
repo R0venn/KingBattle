@@ -20,7 +20,7 @@ public class Rook extends BasePawn {
 	public boolean canMoveTo(int x, int y) {
 		int[] absoluteDist = this.getAbsoluteDistance(x, y);
 		int xDist = absoluteDist[0]; int yDist = absoluteDist[1];
-		return (xDist <= 5 && yDist == 0) || (xDist == 0 && yDist <= 5);
+		return (xDist <= 4 && yDist == 0) || (xDist == 0 && yDist <= 4);
 	}
 	
 	public void resetPawn() {
