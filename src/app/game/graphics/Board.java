@@ -59,19 +59,20 @@ public class Board {
 			}
 			if(game != null) {
 				if(y == 2){
-					System.out.print(" (Manche "+ (firstPlayer.getScore()+secondPlayer.getScore())+1 + ") Le premier à " + Game.ROUND_TO_WIN + " points gagne la partie !");
+					System.out.print(" Manche "+ (firstPlayer.getScore()+secondPlayer.getScore())+1);
 				} else if(y == 3) {
-					System.out.print(" "+ConsoleColors.WHITE_BACKGROUND_BRIGHT + " ♔ " + ConsoleColors.RESET + firstPlayerKing.getHealth() + " pv" + ConsoleColors.BLACK_BACKGROUND + " ♔ " + ConsoleColors.RESET + " - " + secondPlayerKing.getHealth() + " pv" + ConsoleColors.RESET);
+					System.out.print(" "+ConsoleColors.WHITE_BACKGROUND_BRIGHT + " ♔ " + ConsoleColors.RESET + " " + firstPlayerKing.getHealth() + " pv - " + ConsoleColors.BLACK_BACKGROUND + " ♔ " + ConsoleColors.RESET + " " + secondPlayerKing.getHealth() + " pv" + ConsoleColors.RESET);
 				} else if(y == 4) {
-					System.out.print(" "+firstPlayer.getNickname()+": "+firstPlayer.getScore()+" points | " + secondPlayer.getNickname() + ": "+secondPlayer.getScore()+" points.");
+					System.out.print(" "+firstPlayer.getNickname()+": "+firstPlayer.getScore()+"/"+Game.ROUND_TO_WIN+" points | " + secondPlayer.getNickname() + ": "+secondPlayer.getScore()+"/"+Game.ROUND_TO_WIN+" points.");
 				} else if(y == 5) {
 					System.out.print(" C'est aux " + currentPlayer.getColor() + " de jouer.");
 				} else if(y == 6) {
-					System.out.print(" Vous avez : " + currentPlayer.getAP() + " AP " + game.getCurrentPlayer().getMP() + " MP");
+					System.out.print(" Vous avez : " + currentPlayer.getAP() + " PA " + game.getCurrentPlayer().getMP() + " PM");
 				}
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 	
 	public void displayBoard() {

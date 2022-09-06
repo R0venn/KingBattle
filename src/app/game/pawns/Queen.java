@@ -2,6 +2,7 @@ package app.game.pawns;
 
 import app.game.weapons.BaseWeapon;
 import app.game.weapons.Dagger;
+import app.game.weapons.MagicStaff;
 
 public class Queen extends BasePawn{
 
@@ -13,7 +14,7 @@ public class Queen extends BasePawn{
 	 * @param model
 	 */
 	public Queen() {
-		super(175, 25, null, "♕", 0, 0);
+		super(75, 25, new MagicStaff(), "♕", 0, 0);
 	}
 
 	public boolean canMoveTo(int x, int y) {
@@ -24,7 +25,7 @@ public class Queen extends BasePawn{
 	
 	public void resetPawn() {
 		PawnPosition pos = PawnPosition.QUEEN;
-		this.setHealth(175);
+		this.setHealth(75);
 		this.setArmor(25);
 		this.setWeapon(null);
 		this.setX(pos.getX());

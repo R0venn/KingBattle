@@ -116,7 +116,8 @@ public class Menu {
         boolean demande = true;
         int entree = 0;
 
-        System.out.println("Votre choix : [1], [2] ou [3] ?");
+        //System.out.println("\nQue voulez vous faire ?");
+        System.out.print("\nAlors, on fait quoi : ");
         while(demande){
         	
         	Scanner reponse = new Scanner(System.in);
@@ -164,7 +165,7 @@ public class Menu {
         boolean demande = true;
         int entree = 0;
 
-        System.out.println("Votre choix : [1], [2] ou [3] ?");
+        System.out.println("\nQue voulez vous faire ?");
         while(demande){
         	
         	Scanner reponse = new Scanner(System.in);
@@ -192,7 +193,7 @@ public class Menu {
         boolean demande = true;
         int entree = 0;
 
-        System.out.println("Votre choix : [1], [2] ou [3] ?");
+        System.out.println("\nQue voulez vous faire ?");
         while(demande){
         	
         	Scanner reponse = new Scanner(System.in);

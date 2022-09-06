@@ -2,7 +2,7 @@ package app;
 
 abstract public class Utils {
 	public static int[] computeCoordinates(String input) {
-		int first = input.charAt(0) - 'a';
+		int first = Character.toLowerCase(input.charAt(0)) - 'a';
 		int second = Integer.parseInt(input.substring(1, 2)) - 1;
 		return new int[] {first, second};
 	}

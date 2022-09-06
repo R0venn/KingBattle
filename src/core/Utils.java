@@ -25,11 +25,15 @@ public abstract class Utils {
 	
 	public static int randInt(int min, int max) {
 		Random random = new Random();
-		return random.nextInt(max + min) + min;
+		return random.nextInt((max+1) + min) + min;
 	}
 	
 	public static void debug(String log) {
 		System.out.println(ConsoleColors.GREEN_BACKGROUND + "[KingBattle DEBUGGER] " + log + ConsoleColors.RESET);
+	}
+	
+	public static void purple(String message) {
+		System.out.println(ConsoleColors.PURPLE+message+ConsoleColors.RESET);
 	}
 	
 	public static void info(String info) {
@@ -38,6 +42,14 @@ public abstract class Utils {
 	
 	public static void error(String error) {
 		System.out.println(ConsoleColors.RED_BACKGROUND + error + ConsoleColors.RESET);
+	}
+	
+	public static void green(String message) {
+		System.out.println(ConsoleColors.GREEN + message + ConsoleColors.RESET);
+	}
+	
+	public static void red(String message) {
+		System.out.println(ConsoleColors.RED_BRIGHT + message + ConsoleColors.RESET);
 	}
 	
 	public static void sleep(int seconds) {

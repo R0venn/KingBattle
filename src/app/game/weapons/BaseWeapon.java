@@ -31,4 +31,8 @@ public abstract class BaseWeapon {
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
+	
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 }

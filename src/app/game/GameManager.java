@@ -3,6 +3,14 @@ package app.game;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import app.game.bonus.AddArmorCard;
+import app.game.bonus.AddMPCard;
+import app.game.bonus.BonusCardFactory;
+import app.game.bonus.CriticalDmgCard;
+import app.game.bonus.HealingCard;
+import app.game.bonus.ICard;
+import app.game.bonus.SwapPawnsCard;
+import app.game.bonus.SwitchWeaponCard;
 import app.game.graphics.Board;
 import app.game.pawns.BasePawn;
 import app.game.pawns.Bishop;
@@ -24,12 +32,8 @@ public class GameManager {
 		Player playerOne = this.game.getFirstPlayer();
 		Player playerTwo = this.game.getSecondPlayer();
 		this.game.setCurrentPlayer(playerOne);
-		playerOne.addPawn(new King());
-		playerOne.addPawn(new Pawn());
-		playerTwo.addPawn(new King());
-		playerTwo.addPawn(new Pawn());
-		playerOne.setCurrentPawn(playerOne.getKing());
-		playerTwo.setCurrentPawn(playerTwo.getKing());
+		this.setUpPlayer(playerOne);
+		this.setUpPlayer(playerTwo);
 	}
 	
 	public Game getGame() { return this.game; }
@@ -51,21 +55,46 @@ public class GameManager {
 		int choice;
 		ArrayList<String> menuChoices = new ArrayList<>();
 		menuChoices.add("Passer mon tour");
-		menuChoices.add("Bouger mon pion");
 		menuChoices.add("Selectionner un autre pion");
-		menuChoices.add("Attaquer une cible");
+		int choiceAmount = menuChoices.size();
 		do {
-			boolean canAttack = currentPlayer.canAttack() && currentPlayer.getCurrentPawn().hasSomeoneInRange(game.getOpponent().getAlivePawns());
+			if(Utils.randInt(0, 100) > 95) currentPlayer.addRandomPower();
 			this.game.getBoard().displayBoard(2);
-			Utils.error("\n"+currentPlayer.getNickname()+", vous controlez votre : " + currentPlayer.getCurrentPawn().getModel());
+			Utils.purple(currentPlayer.getNickname()+", vous controlez votre:\n" + currentPlayer.getCurrentPawn().getInfos()+"\n");
+			
 			for(int i = 0; i < menuChoices.size(); i++) {
-				System.out.println(i+". "+menuChoices.get(i)+".");
+				Utils.green(i+". "+menuChoices.get(i)+".");
 			}
+			
+			if(currentPlayer.canMove()) {
+				Utils.green("2. Bouger mon pion");
+				choiceAmount = 2;
+			} else {
+				Utils.red("Vous ne pouvez pas bouger de pion");
+			}
+			
+			if(currentPlayer.canAttack(game.getOpponent().getAlivePawns())) {
+				Utils.green("3. Attaquer une cible");
+				choiceAmount = 3;
+			} else {
+				Utils.red("Vous ne pouvez pas attaquer");
+			}
+			
+			if(currentPlayer.getPowers().size() > 0) {
+				Utils.green("4. Utiliser une carte bonus");
+				choiceAmount = 4;
+			} else {
+				Utils.red("Vous n'avez pas de carte bonus");
+			}
+			
 			do {
-				choice = currentPlayer.askDigit("Quelle action voulez-vous faire ?");
-			} while(choice < 0 || (choice > menuChoices.size()-1));
+				choice = currentPlayer.askDigit("Quelle action souhaitez-vous faire ? (ex: 0)");
+			} while(choice < 0 || choice > (choiceAmount));
 			switch(choice) {
 				case 1:
+					this.choicePawn(currentPlayer);
+					break;
+				case 2:
 					if(currentPlayer.canMove()) {
 						this.moveTarget(currentPlayer);
 					} else {
@@ -73,25 +102,34 @@ public class GameManager {
 						Utils.sleep(2);
 					}
 					break;
-				case 2:
-					this.choicePawn(currentPlayer);
-					break;
 				case 3:
-					if(canAttack) {						
+					if(currentPlayer.canAttack(game.getOpponent().getAlivePawns())) {
 						this.attackTarget(currentPlayer);
 						this.game.getBoard().updateBoard();
 						this.game.getOpponent().checkCurrentPawnAlive();
 					} else {
-						if(!currentPlayer.canAttack()) {
-							Utils.info("Vous n'avez plus de PA (points d'action) disponbile.");
-						} else {
-							Utils.info("Aucun ennemi à portée (les ennemis à portée sont affiché en rouge)");
-						}
+						Utils.info("Aucune cible à portée.");
 						Utils.sleep(2);
 					}
 					break;
+				case 4:
+					this.choiceBonus(currentPlayer);
+					break;
 			}
 		} while(!this.isMatchEnd() && choice != 0 && currentPlayer.canAction(this.game.getOpponent().getPawns()));
+	}
+	
+	public void choiceBonus(Player currentPlayer) {
+		this.game.getBoard().displayBoard();
+		ArrayList<ICard> bonusList = currentPlayer.getPowers();
+		for(int i = 0; i < bonusList.size(); i++) {
+			System.out.println(i+". "+bonusList.get(i).getEffect());
+		}
+		int bonusIndex;
+		do {
+			bonusIndex = currentPlayer.askDigit("Quel bonus souhaitez vous utiliser ? (9 pour annuler)");
+		}while((bonusIndex < 0 || bonusIndex > bonusList.size()-1) && bonusIndex != 9);
+		if(bonusIndex != 9) currentPlayer.usePower(bonusList.get(bonusIndex), this.game);
 	}
 	
 	public void choicePawn(Player currentPlayer) {
@@ -180,8 +218,11 @@ public class GameManager {
 		Player winner = this.game.getFirstPlayer().getKing().isDead() ? this.game.getSecondPlayer() : this.game.getFirstPlayer();
 		Player loser = this.game.getFirstPlayer() == winner ? this.game.getSecondPlayer() : this.game.getFirstPlayer();
 		winner.winGameMatch();
+		winner.addRandomPower();
+		winner.addRandomPower();
 		winner.addPawn(this.game.pickRandomPawn(winner));
 		loser.addPawn(this.game.pickRandomPawn(loser));
+		loser.addRandomPower();
 		Utils.sleep(2);
 	}
 	
@@ -202,5 +243,12 @@ public class GameManager {
 	
 	public boolean onePlayerWon() {
 		return this.game.getFirstPlayer().getScore() == Game.ROUND_TO_WIN || this.game.getSecondPlayer().getScore() == Game.ROUND_TO_WIN;		
+	}
+	
+	public void setUpPlayer(Player player) {
+		player.addRandomPower();
+		player.addPawn(new King());
+		player.addPawn(new Pawn());
+		player.setCurrentPawn(player.getKing());
 	}
 }

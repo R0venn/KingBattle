@@ -34,7 +34,7 @@ public class SwapPawnsCard implements ICard{
 			// si les coordonnées ciblées sont valides, alors on peut procéder à l'échange des pièces
 			if (game.getBoard().isPawn(targetPawnPosX, targetPawnPosY)) {
 				// on récupère la pièce ciblée
-				targetPawn = game.getCurrentPlayer().getPawnFromPos(targetPawnPosX, targetPawnPosY);	
+				targetPawn = game.getBoard().getPawn(targetPawnPosX, targetPawnPosY);
 			}				
 		} while(targetPawnPosX == currentPlayer.getKing().getX() && targetPawnPosY == currentPlayer.getKing().getY());
 		 // on échange les positions

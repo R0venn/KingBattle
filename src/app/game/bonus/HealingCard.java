@@ -6,7 +6,7 @@ public class HealingCard implements ICard{
 
 	@Override
 	public String getEffect() {
-		return "Soigne la pièce ciblée de 50 points de vie. (1 seule utilisation)";
+		return "Augmente les points de vie de votre pièce atuelle de 50.";
 	}
 
 	@Override

@@ -3,15 +3,15 @@ package app.game.bonus;
 import app.game.Game;
 import app.game.pawns.BasePawn;
 
-public class AddMPCard implements ICard{
+public class AddAPCard implements ICard{
 
 	@Override
 	public String getEffect() {
-		return "Vous octroie un PA de plus pour ce tour.";
+		return "Vous octroie un PM de plus pour ce tour.";
 	}
 
 	@Override
 	public void use(Game game) {
-		game.getCurrentPlayer().setAP(game.getCurrentPlayer().getAP()+1);
+		game.getCurrentPlayer().setMP(game.getCurrentPlayer().getMP()+1);
 	}
 }

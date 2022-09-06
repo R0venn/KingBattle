@@ -54,6 +54,10 @@ public abstract class BasePawn {
 		return this.getHealth() <= 0;
 	}
 	
+	public String getInfos() {
+		return this.getModel() + " vie: " + this.getHealth() + " armure: " + this.getArmor() + " arme: " +this.getWeapon();
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -83,7 +87,7 @@ public abstract class BasePawn {
 	 * @return
 	 */
 	public void setArmor(int armor) {
-		this.m_armor = armor;
+		this.m_armor = armor < 0 ? 0 : armor;
 	}
 	
 	/**
@@ -119,7 +123,7 @@ public abstract class BasePawn {
 	}
 	
 	public String toString() {
-		return this.m_model;
+		return this.m_model + " t";
 	}
 	
 	/* Should be deprecated */
@@ -148,14 +152,18 @@ public abstract class BasePawn {
 		return res;
 	}
 	
+	public void doDamage(int damage) {
+		int remainingArmor = this.getArmor() - damage;
+		this.setArmor(remainingArmor);
+		if(remainingArmor < 0) this.setHealth(this.getHealth() - Math.abs(remainingArmor));
+	}
+	
 	public void attack(BasePawn target) {
 		if(this.rangeToAttack(target)) {
-			int initHealth = target.getHealth();
 			int weaponDamage = this.getWeapon().getDamage();
-			int newHealth = initHealth - weaponDamage;
-			target.setHealth(newHealth);
-			Utils.info("Tu as touché le " + target.getModel() + " adverse pour " + weaponDamage + " points de vie !\nIl lui en reste "+newHealth);
-			Utils.sleep(2);
+			target.doDamage(weaponDamage);
+			Utils.info("Tu as touché le " + target.getModel() + " adverse pour " + weaponDamage + " points de vie !\nIl lui reste "+target.getHealth() +" pv et " + target.getArmor() +" d'armure.");
+			Utils.sleep(3);
 		}
 	}
 	

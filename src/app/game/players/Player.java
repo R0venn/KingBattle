@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import app.Utils;
+import app.game.Game;
+import app.game.bonus.BonusCardFactory;
+import app.game.bonus.ICard;
 import app.game.pawns.BasePawn;
 import app.game.pawns.PawnColors;
 
@@ -15,12 +18,14 @@ public class Player {
 	private BasePawn currentPawn;
 	private int m_ap;
 	private int m_mp;
+	private ArrayList<ICard> m_powers;
 	
 	public Player(String nickname, PawnColors color) {
 		this.m_nickname = nickname;
 		this.m_color = color;
 		this.m_score = 0;
 		this.m_pawns = new ArrayList<>();
+		this.m_powers = new ArrayList<>();
 		this.resetPoints();
 	}
 	
@@ -34,8 +39,28 @@ public class Player {
 	public void setAP(int ap) { this.m_ap = ap; }
 	public int getMP() { return this.m_mp; }
 	public int getAP() { return this.m_ap; }
+	public ArrayList<ICard> getPowers() { return this.m_powers; }
 	public void useMP() { if(this.canMove()) this.setMP(this.getMP()-1); }
-	public void useAP() { if(this.canAttack()) this.setAP(this.getAP()-1); }
+	public void useAP() { if(this.canUseAP()) this.setAP(this.getAP()-1); }
+	
+	public void addPower(ICard cardPower) {
+		this.getPowers().add(cardPower);
+		core.Utils.info(this.getNickname()+" vous avez obtenu : " + cardPower.getEffect());
+		core.Utils.sleep(3);
+	}
+	
+	public void addRandomPower() {
+		this.addPower(BonusCardFactory.getRandomCard());
+	}
+	
+	public boolean usePower(ICard cardPower, Game game) {
+		boolean res = false;
+		if(this.getPowers().remove(cardPower)) {
+			res = true;
+			cardPower.use(game);
+		}
+		return res;
+	}
 	
 	public void resetPawns() {
 		for(BasePawn pawn : this.getPawns()) {
@@ -51,8 +76,10 @@ public class Player {
 		return this.getMP() > 0;
 	}
 	
-	public boolean canAttack() {
-		return this.getAP() > 0;
+	public boolean canUseAP() { return this.getAP() > 0; }
+	
+	public boolean canAttack(ArrayList<BasePawn> opponentPawns) {
+		return this.getAP() > 0 && this.getCurrentPawn().hasSomeoneInRange(opponentPawns);
 	}
 	
 	public boolean isFriendlyPawn(BasePawn pawn) {
@@ -75,7 +102,7 @@ public class Player {
 		return res;
 	}
 	
-	public boolean canAction(ArrayList<BasePawn> opponentPawns) { return this.canMove() || (this.canAttack() && this.onePawnCanAttack(opponentPawns)); }
+	public boolean canAction(ArrayList<BasePawn> opponentPawns) { return this.canMove() || this.canAttack(opponentPawns); }
 	
 	public boolean onePawnCanAttack(ArrayList<BasePawn> opponentPawns) {
 		boolean res = false;
