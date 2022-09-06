@@ -27,7 +27,7 @@ public class Queen extends BasePawn{
 		PawnPosition pos = PawnPosition.QUEEN;
 		this.setHealth(75);
 		this.setArmor(25);
-		this.setWeapon(null);
+		this.setWeapon(new MagicStaff());
 		this.setX(pos.getX());
 		this.setY(pos.getY(this.getBaseColor()));
 	}

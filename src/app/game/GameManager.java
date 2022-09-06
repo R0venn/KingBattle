@@ -58,7 +58,6 @@ public class GameManager {
 		menuChoices.add("Selectionner un autre pion");
 		int choiceAmount = menuChoices.size();
 		do {
-			if(Utils.randInt(0, 100) > 95) currentPlayer.addRandomPower();
 			this.game.getBoard().displayBoard(2);
 			Utils.purple(currentPlayer.getNickname()+", vous controlez votre:\n" + currentPlayer.getCurrentPawn().getInfos()+"\n");
 			
@@ -95,6 +94,7 @@ public class GameManager {
 					this.choicePawn(currentPlayer);
 					break;
 				case 2:
+					if(Utils.randInt(0, 100) > 95) currentPlayer.addRandomPower();
 					if(currentPlayer.canMove()) {
 						this.moveTarget(currentPlayer);
 					} else {
@@ -103,6 +103,7 @@ public class GameManager {
 					}
 					break;
 				case 3:
+					if(Utils.randInt(0, 100) > 95) currentPlayer.addRandomPower();
 					if(currentPlayer.canAttack(game.getOpponent().getAlivePawns())) {
 						this.attackTarget(currentPlayer);
 						this.game.getBoard().updateBoard();

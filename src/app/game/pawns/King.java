@@ -20,7 +20,7 @@ public class King extends BasePawn{
 	public boolean canMoveTo(int x, int y) {
 		int[] absoluteDist = this.getAbsoluteDistance(x, y);
 		int xDist = absoluteDist[0]; int yDist = absoluteDist[1];
-		return xDist <= 5 && yDist <= 2;
+		return xDist <= 2 && yDist <= 2;
 	}
 	
 	public void resetPawn() {

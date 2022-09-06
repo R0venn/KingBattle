@@ -41,7 +41,7 @@ public class Game {
 	
 	public BasePawn pickRandomPawn(Player player) {
 		ArrayList<BasePawn> pawnsAvailable = player == this.getFirstPlayer() ? Game.availablePawnsOne : Game.availablePawnsTwo;
-		int random = Utils.randInt(0, pawnsAvailable.size());
+		int random = Utils.randInt(0, pawnsAvailable.size()-1);
 		BasePawn pawn = pawnsAvailable.get(random);
 		pawnsAvailable.remove(random);
 		return pawn;

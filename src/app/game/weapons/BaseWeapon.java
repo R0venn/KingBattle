@@ -33,6 +33,6 @@ public abstract class BaseWeapon {
 	}
 	
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return this.getClass().getSimpleName() + " portée: " + this.getRange();
 	}
 }
